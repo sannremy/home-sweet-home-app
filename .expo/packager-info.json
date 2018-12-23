@@ -1,9 +1,0 @@
-{
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://ni-u5h.anonymous.home-sweet-home-app.exp.direct",
-  "packagerNgrokUrl": "https://packager.ni-u5h.anonymous.home-sweet-home-app.exp.direct",
-  "ngrokPid": 57137,
-  "devToolsPort": 19002,
-  "packagerPort": 19003,
-  "packagerPid": 57120
-}

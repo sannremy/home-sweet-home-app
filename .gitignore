@@ -2,6 +2,9 @@
 #
 .DS_Store
 
+# Build
+.expo
+
 # Xcode
 #
 build/
