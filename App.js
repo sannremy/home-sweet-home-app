@@ -25,9 +25,11 @@ export default class App extends React.Component {
     };
   }
 
-  _onRefresh() {
+  _onRefresh = () => {
     this.setState({refreshing: true});
-    this.setState({refreshing: false});
+    setTimeout(() => {
+      this.setState({refreshing: false});
+    }, 2000);
   }
 
   render() {
@@ -49,7 +51,7 @@ export default class App extends React.Component {
               />
             }
           >
-            <Text style={{fontSize:96}}>Scroll me plz</Text>
+            <Text>Scroll me plz</Text>
           </ScrollView>
 
           {/* Footer menu */}
