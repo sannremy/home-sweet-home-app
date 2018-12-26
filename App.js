@@ -14,21 +14,29 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 
 export default class App extends React.Component {
-  _onPressButton() {
-    Alert.alert('You tapped the button!')
+  _onPressChangeView = (view) => {
+    this.setState({
+      currentView: view
+    });
   }
 
   constructor(props) {
     super(props);
     this.state = {
       refreshing: false,
+      currentView: 'temperature'
     };
   }
 
   _onRefresh = () => {
-    this.setState({refreshing: true});
+    this.setState({
+      refreshing: true
+    });
+
     setTimeout(() => {
-      this.setState({refreshing: false});
+      this.setState({
+        refreshing: false
+      });
     }, 2000);
   }
 
@@ -56,27 +64,27 @@ export default class App extends React.Component {
 
           {/* Footer menu */}
           <View style={styles.menu}>
-            <TouchableOpacity onPress={this._onPressButton} style={styles.menuItem}>
+            <TouchableOpacity onPress={() => this._onPressChangeView('temperature')} style={[styles.menuItem, this.state.currentView === 'temperature' ? styles.menuItemHighlighted : null]}>
               <View>
                 <Icon name="thermometer" size={styles.menuItem.fontSize} color={styles.menuItem.color} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this._onPressButton} style={styles.menuItem}>
+            <TouchableOpacity onPress={() => this._onPressChangeView('weather')} style={[styles.menuItem, this.state.currentView === 'weather' ? styles.menuItemHighlighted : null]}>
               <View>
                 <Icon name="sun" size={styles.menuItem.fontSize} color={styles.menuItem.color} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this._onPressButton} style={styles.menuItem}>
+            <TouchableOpacity onPress={() => this._onPressChangeView('river')} style={[styles.menuItem, this.state.currentView === 'river' ? styles.menuItemHighlighted : null]}>
               <View>
                 <Icon name="droplet" size={styles.menuItem.fontSize} color={styles.menuItem.color} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this._onPressButton} style={styles.menuItem}>
+            <TouchableOpacity onPress={() => this._onPressChangeView('traffic')} style={[styles.menuItem, this.state.currentView === 'traffic' ? styles.menuItemHighlighted : null]}>
               <View>
                 <Icon name="map-pin" size={styles.menuItem.fontSize} color={styles.menuItem.color} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this._onPressButton} style={styles.menuItem}>
+            <TouchableOpacity onPress={() => this._onPressChangeView('network')} style={[styles.menuItem, this.state.currentView === 'network' ? styles.menuItemHighlighted : null]}>
               <View>
                 <Icon name="wifi" size={styles.menuItem.fontSize} color={styles.menuItem.color} />
               </View>
@@ -89,10 +97,10 @@ export default class App extends React.Component {
 }
 
 const colors = {
-  light: '#8effc1',
-  background: '#1dbc60',
-  dark: '#0dac50',
-  veryDark: '#009c41'
+  light: '#fad390',
+  background: '#f6b93b',
+  dark: '#fa983a',
+  veryDark: '#e58e26'
 };
 
 const styles = StyleSheet.create({
@@ -101,28 +109,32 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background
   },
   header: {
-    flex: 0.15,
+    flex: 0.10,
     flexDirection: 'row',
     backgroundColor: colors.background,
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 44,
-    color: colors.light
+    color: 'white'
   },
   content: {
     backgroundColor: 'white'
   },
   menu: {
-    flex: 0.15,
+    flex: 0.10,
     flexDirection: 'row',
-    backgroundColor: colors.background
+    backgroundColor: colors.background,
   },
   menuItem: {
     flex: 0.2,
-    backgroundColor: colors.background,
     alignItems: 'center',
     justifyContent: 'center',
-    color: colors.light,
-    fontSize: 28
+    color: 'white',
+    fontSize: 28,
+    borderTopWidth: 10,
+    borderTopColor: colors.background
+  },
+  menuItemHighlighted: {
+    borderTopColor: colors.veryDark
   },
 });
