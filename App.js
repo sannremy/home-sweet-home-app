@@ -1,3 +1,5 @@
+import { HOME_SWEET_HOME_API_URL } from 'react-native-dotenv'
+
 import React from 'react';
 
 import {
@@ -27,6 +29,36 @@ export default class App extends React.Component {
       currentView: 'temperature'
     };
   }
+
+  async componentWillUpdate(nextProps, nextState) {
+    try {
+      let data = await this._getServiceFromApi('river');
+      console.log(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  _getServiceFromApi = async (view) => {
+    const mapViewEndpoint = {
+      temperature: 'temperature',
+      weather: 'weather',
+      river: 'vigicrue',
+      traffic: 'traffic',
+      network: 'network'
+    };
+
+    try {
+      let response = await fetch(
+        HOME_SWEET_HOME_API_URL + '/' + mapViewEndpoint[view],
+      );
+
+      let responseJson = await response.json();
+      return responseJson;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   _onRefresh = () => {
     this.setState({
