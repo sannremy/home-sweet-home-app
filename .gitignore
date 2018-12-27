@@ -4,6 +4,7 @@
 
 # Build
 .expo
+.env
 
 # Xcode
 #
