@@ -32,7 +32,7 @@ export default class App extends React.Component {
 
   async componentWillUpdate(nextProps, nextState) {
     try {
-      let data = await this._getServiceFromApi('river');
+      let data = await this._getServiceFromApi(nextState.currentView);
       console.log(data);
     } catch (err) {
       console.error(err);
@@ -41,11 +41,11 @@ export default class App extends React.Component {
 
   _getServiceFromApi = async (view) => {
     const mapViewEndpoint = {
-      temperature: 'temperature',
+      temperature: 'weather',
       weather: 'weather',
       river: 'vigicrue',
-      traffic: 'traffic',
-      network: 'network'
+      traffic: 'weather',
+      network: 'weather'
     };
 
     try {
