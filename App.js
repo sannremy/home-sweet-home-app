@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background
   },
   header: {
-    flex: 0.10,
+    flex: 0.1,
     flexDirection: 'row',
     backgroundColor: colors.background,
     alignItems: 'center',
@@ -174,10 +174,11 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   content: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    flex: 0.8,
   },
   menu: {
-    flex: 0.10,
+    flex: 0.1,
     flexDirection: 'row',
     backgroundColor: colors.background,
   },
