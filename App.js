@@ -16,10 +16,27 @@ import {
 import Icon from 'react-native-vector-icons/Feather';
 
 export default class App extends React.Component {
-  _onPressChangeView = (view) => {
+  _onPressChangeView = async (view) => {
     this.setState({
-      currentView: view
+      currentView: view,
+      refreshing: true,
     });
+
+    try {
+      let data = await this._getServiceFromApi(view);
+
+      this.setState({
+        refreshing: false,
+        data: data
+      });
+    } catch (err) {
+      console.error(err);
+
+      this.setState({
+        refreshing: false,
+        data: null
+      });
+    }
   }
 
   constructor(props) {
@@ -28,15 +45,6 @@ export default class App extends React.Component {
       refreshing: false,
       currentView: 'temperature'
     };
-  }
-
-  async componentWillUpdate(nextProps, nextState) {
-    try {
-      let data = await this._getServiceFromApi(nextState.currentView);
-      console.log(data);
-    } catch (err) {
-      console.error(err);
-    }
   }
 
   _getServiceFromApi = async (view) => {
@@ -60,19 +68,35 @@ export default class App extends React.Component {
     }
   };
 
-  _onRefresh = () => {
+  _onRefresh = async () => {
     this.setState({
       refreshing: true
     });
 
-    setTimeout(() => {
+    try {
+      let data = await this._getServiceFromApi(this.state.currentView);
+
       this.setState({
-        refreshing: false
+        refreshing: false,
+        data: data
       });
-    }, 2000);
+    } catch (err) {
+      console.error(err);
+
+      this.setState({
+        refreshing: false,
+        data: null
+      });
+    }
   }
 
   render() {
+    let text = 'text goes here';
+
+    if (this.state.data) {
+      text = JSON.stringify(this.state.data);
+    }
+
     return (
       <View style={styles.app}>
         <SafeAreaView style={styles.app}>
@@ -91,7 +115,7 @@ export default class App extends React.Component {
               />
             }
           >
-            <Text>Scroll me plz</Text>
+            <Text>{text}</Text>
           </ScrollView>
 
           {/* Footer menu */}
