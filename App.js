@@ -115,7 +115,9 @@ export default class App extends React.Component {
               />
             }
           >
-            <Text>{text}</Text>
+            <View style={styles.box}>
+              <Text>{text}</Text>
+            </View>
           </ScrollView>
 
           {/* Footer menu */}
@@ -174,8 +176,13 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   content: {
-    backgroundColor: 'white',
+    backgroundColor: '#f3f3f3',
     flex: 0.8,
+  },
+  box: {
+    backgroundColor: '#fff',
+    margin: 20,
+    padding: 20
   },
   menu: {
     flex: 0.1,
