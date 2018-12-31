@@ -15,6 +15,8 @@ import {
 
 import Icon from 'react-native-vector-icons/Feather';
 
+import River from './components/River';
+
 export default class App extends React.Component {
   _onPressChangeView = async (view) => {
     this.setState({
@@ -91,10 +93,19 @@ export default class App extends React.Component {
   }
 
   render() {
-    let text = 'text goes here';
+    let content = null;
 
     if (this.state.data) {
-      text = JSON.stringify(this.state.data);
+      switch (this.state.currentView) {
+        case 'river':
+          content = (
+            <River data={this.state.data} />
+          );
+        break;
+        default:
+          content = <Text>text goes here</Text>;
+        break;
+      }
     }
 
     return (
@@ -115,9 +126,7 @@ export default class App extends React.Component {
               />
             }
           >
-            <View style={styles.box}>
-              <Text>{text}</Text>
-            </View>
+            {content}
           </ScrollView>
 
           {/* Footer menu */}
