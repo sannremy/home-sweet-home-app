@@ -6,6 +6,7 @@ import {
   View
 } from 'react-native';
 
+import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Feather';
 
 export default class River extends React.Component {
@@ -15,23 +16,6 @@ export default class River extends React.Component {
   }
 
   render() {
-    // Icon
-    const info = {
-      name: 'help-circle', // Unknown
-      size: 20,
-      color: this.props.data.color
-    };
-
-    if (this.props.data.color === 'green') {
-      info.name = 'check-circle';
-    } else if (this.props.data.color === 'red') {
-      info.name = 'alert-circle';
-    } else if (this.props.data.color === 'orange') {
-      info.name = 'alert-circle';
-    } else if (this.props.data.color === 'yellow') {
-      info.name = 'alert-circle';
-    }
-
     // Date
     let date = null;
     let dateComponent = null;
@@ -39,7 +23,6 @@ export default class River extends React.Component {
     if (this.props.data.date) {
       date = new Date(this.props.data.date);
       dateComponent = <Text>{date.toLocaleDateString('en-US', {
-        weekday: 'long',
         month: 'long',
         day: 'numeric',
         hour12: false,
@@ -49,19 +32,50 @@ export default class River extends React.Component {
     }
 
     return (
-      <View style={styles.box}>
-        <Icon name={info.name} size={info.size} color={info.color} />
-        {dateComponent}
-        <Text>{this.props.data.level} m</Text>
-      </View>
+      <Grid style={styles.wrapper}>
+        <Row size={11}>
+          <Col>
+            <Row>
+              <View style={styles.levelWrapper}>
+                <Icon name='droplet' size={styles.levelText.fontSize} color={this.props.data.color} />
+                <Text style={[styles.levelText, { color: this.props.data.color }]}>{this.props.data.level}</Text>
+              </View>
+            </Row>
+          </Col>
+        </Row>
+        <Row size={1}>
+          <View style={styles.date}>
+            {dateComponent}
+          </View>
+        </Row>
+      </Grid>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  box: {
-    backgroundColor: '#fff',
-    margin: 20,
+  wrapper: {
     padding: 20
+  },
+  date: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  levelWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  levelText: {
+    paddingLeft: 12,
+    fontSize: 52,
+    color: '#000'
+  },
+  icon: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
