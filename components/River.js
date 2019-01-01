@@ -33,13 +33,26 @@ export default class River extends React.Component {
     }
 
     // Date
+    let date = null;
+    let dateComponent = null;
+
+    if (this.props.data.date) {
+      date = new Date(this.props.data.date);
+      dateComponent = <Text>{date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit'
+      })}</Text>;
+    }
 
     return (
       <View style={styles.box}>
         <Icon name={info.name} size={info.size} color={info.color} />
-        <Text>{this.props.data.date}</Text>
-        <Text>{this.props.data.level}</Text>
-        <Text>{this.props.data.color}</Text>
+        {dateComponent}
+        <Text>{this.props.data.level} m</Text>
       </View>
     );
   }
