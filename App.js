@@ -17,6 +17,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Feather';
 
 import River from './components/River';
+import Indoor from './components/Indoor';
 
 export default class App extends React.Component {
   // _onPressChangeView = async (view) => {
@@ -48,16 +49,17 @@ export default class App extends React.Component {
       refreshing: false,
       riverData: null,
       weatherData: null,
+      indoorData: null
     };
   }
 
   _getServiceFromApi = async (view) => {
     const mapViewEndpoint = {
-      temperature: 'weather',
+      indoor: 'netatmo',
       weather: 'weather',
       river: 'vigicrue',
-      traffic: 'weather',
-      network: 'weather'
+      traffic: 'traffic',
+      network: 'network'
     };
 
     try {
@@ -97,11 +99,13 @@ export default class App extends React.Component {
   async componentDidMount() {
     let riverData = await this._getServiceFromApi('river');
     let weatherData = await this._getServiceFromApi('weather');
+    let indoorData = await this._getServiceFromApi('indoor');
 
     this.setState({
       refreshing: false,
       riverData: riverData,
-      weatherData: weatherData
+      weatherData: weatherData,
+      indoorData: indoorData
     });
   }
 
@@ -130,6 +134,17 @@ export default class App extends React.Component {
       weatherComponent = <Text>loading</Text>;
     }
 
+    // Indoor
+    let indoorComponent = null;
+
+    if (this.state.indoorData) {
+      indoorComponent = (
+        <Indoor data={this.state.indoorData} />
+      );
+    } else {
+      indoorComponent = <Text>loading</Text>;
+    }
+
     return (
       <View style={styles.app}>
         <SafeAreaView style={styles.app}>
@@ -140,23 +155,7 @@ export default class App extends React.Component {
                 {weatherComponent}
               </Row>
               <Row>
-                <Col>
-                  <Row style={{ backgroundColor: '#eee' }}>
-                    <Icon name='thermometer' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
-                    <Text>test</Text>
-                  </Row>
-                  <Row style={{ backgroundColor: '#ddd' }}>
-                    <Icon name='thermometer' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
-                  </Row>
-                </Col>
-                <Col>
-                  <Row style={{ backgroundColor: '#ccc' }}>
-                    <Icon name='thermometer' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
-                  </Row>
-                  <Row style={{ backgroundColor: '#bbb' }}>
-                    <Icon name='thermometer' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
-                  </Row>
-                </Col>
+                {indoorComponent}
               </Row>
             </Col>
             <Col size={6}>
