@@ -18,6 +18,9 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import River from './components/River';
 import Indoor from './components/Indoor';
+import Traffic from './components/Traffic';
+import Network from './components/Network';
+import Weather from './components/Weather';
 
 export default class App extends React.Component {
   // _onPressChangeView = async (view) => {
@@ -49,7 +52,9 @@ export default class App extends React.Component {
       refreshing: false,
       riverData: null,
       weatherData: null,
-      indoorData: null
+      indoorData: null,
+      trafficData: null,
+      networkData: null,
     };
   }
 
@@ -97,15 +102,19 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
-    let riverData = await this._getServiceFromApi('river');
-    let weatherData = await this._getServiceFromApi('weather');
-    let indoorData = await this._getServiceFromApi('indoor');
+    const riverData = await this._getServiceFromApi('river');
+    const weatherData = await this._getServiceFromApi('weather');
+    const indoorData = await this._getServiceFromApi('indoor');
+    const trafficData = await this._getServiceFromApi('traffic');
+    const networkData = await this._getServiceFromApi('network');
 
     this.setState({
       refreshing: false,
       riverData: riverData,
       weatherData: weatherData,
-      indoorData: indoorData
+      indoorData: indoorData,
+      trafficData: trafficData,
+      networkData: networkData,
     });
   }
 
@@ -124,11 +133,7 @@ export default class App extends React.Component {
 
     if (this.state.weatherData) {
       weatherComponent = (
-        <View>
-          <Text>{JSON.stringify(this.state.weatherData.location.city)}</Text>
-          <Text>{JSON.stringify(this.state.weatherData.condition)}</Text>
-          <Text>{JSON.stringify(this.state.weatherData.forecast)}</Text>
-        </View>
+        <Weather data={this.state.weatherData} />
       );
     } else {
       weatherComponent = <Text>loading</Text>;
@@ -143,6 +148,28 @@ export default class App extends React.Component {
       );
     } else {
       indoorComponent = <Text>loading</Text>;
+    }
+
+    // Traffic
+    let trafficComponent = null;
+
+    if (this.state.trafficData) {
+      trafficComponent = (
+        <Traffic data={this.state.trafficData} />
+      );
+    } else {
+      trafficComponent = <Text>loading</Text>;
+    }
+
+    // Network
+    let networkComponent = null;
+
+    if (this.state.networkData) {
+      networkComponent = (
+        <Network data={this.state.networkData} />
+      );
+    } else {
+      networkComponent = <Text>loading</Text>;
     }
 
     return (
@@ -161,12 +188,14 @@ export default class App extends React.Component {
             <Col size={6}>
               <Row style={{ backgroundColor: '#999' }}>
                 <Icon name='map-pin' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
+                {trafficComponent}
               </Row>
               <Row>
                 {riverComponent}
               </Row>
               <Row style={{ backgroundColor: '#777' }}>
                 <Icon name='wifi' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
+                {networkComponent}
               </Row>
             </Col>
           </Grid>
