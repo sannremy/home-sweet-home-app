@@ -132,9 +132,7 @@ export default class App extends React.Component {
     let weatherComponent = null;
 
     if (this.state.weatherData) {
-      weatherComponent = (
-        <Weather data={this.state.weatherData} />
-      );
+      weatherComponent = <Weather data={this.state.weatherData} />;
     } else {
       weatherComponent = <Text>loading</Text>;
     }
@@ -143,9 +141,7 @@ export default class App extends React.Component {
     let indoorComponent = null;
 
     if (this.state.indoorData) {
-      indoorComponent = (
-        <Indoor data={this.state.indoorData} />
-      );
+      indoorComponent = <Indoor data={this.state.indoorData} />;
     } else {
       indoorComponent = <Text>loading</Text>;
     }
@@ -154,9 +150,7 @@ export default class App extends React.Component {
     let trafficComponent = null;
 
     if (this.state.trafficData) {
-      trafficComponent = (
-        <Traffic data={this.state.trafficData} />
-      );
+      trafficComponent = <Traffic data={this.state.trafficData} />;
     } else {
       trafficComponent = <Text>loading</Text>;
     }
@@ -165,37 +159,45 @@ export default class App extends React.Component {
     let networkComponent = null;
 
     if (this.state.networkData) {
-      networkComponent = (
-        <Network data={this.state.networkData} />
-      );
+      networkComponent = <Network data={this.state.networkData} />;
     } else {
       networkComponent = <Text>loading</Text>;
     }
 
     return (
       <View style={styles.app}>
-        <SafeAreaView style={styles.app}>
-          <Grid>
+        <SafeAreaView style={styles.appSafe}>
+          <Grid style={{ padding: styles.box.padding }}>
             <Col size={6}>
-              <Row style={{ backgroundColor: '#aaa' }}>
-                <Icon name='sun' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
-                {weatherComponent}
+              <Row style={styles.box}>
+                <View style={styles.componentWrapper}>
+                  <Icon name='sun' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
+                  {weatherComponent}
+                </View>
               </Row>
-              <Row>
-                {indoorComponent}
+              <Row style={styles.box}>
+                <View style={styles.componentWrapper}>
+                  {indoorComponent}
+                </View>
               </Row>
             </Col>
             <Col size={6}>
-              <Row style={{ backgroundColor: '#999' }}>
-                <Icon name='map-pin' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
-                {trafficComponent}
+              <Row style={styles.box}>
+                <View style={styles.componentWrapper}>
+                  <Icon name='map-pin' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
+                  {trafficComponent}
+                </View>
               </Row>
-              <Row>
-                {riverComponent}
+              <Row style={styles.box}>
+                <View style={styles.componentWrapper}>
+                  {riverComponent}
+                </View>
               </Row>
-              <Row style={{ backgroundColor: '#777' }}>
-                <Icon name='wifi' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
-                {networkComponent}
+              <Row style={styles.box}>
+                <View style={styles.componentWrapper}>
+                  <Icon name='wifi' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
+                  {networkComponent}
+                </View>
               </Row>
             </Col>
           </Grid>
@@ -263,6 +265,9 @@ const styles = StyleSheet.create({
   app: {
     flex: 1
   },
+  appSafe: {
+    flex: 1,
+  },
   header: {
     flex: 0.1,
     flexDirection: 'row',
@@ -277,9 +282,13 @@ const styles = StyleSheet.create({
     flex: 0.8,
   },
   box: {
-    backgroundColor: '#fff',
-    margin: 20,
-    padding: 20
+    padding: 5,
+  },
+  componentWrapper: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#f0f0f0',
+    borderRadius: 10,
   },
   menu: {
     flex: 0.1,

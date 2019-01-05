@@ -29,36 +29,45 @@ export default class Indoor extends React.Component {
         </Row>
         <Row size={6}>
           <View style={styles.temperatureWrapper}>
-            <Text style={styles.temperatureText}>{metrics.Temperature}℃</Text>
+            <Icon name='thermometer' size={styles.temperatureText.fontSize / 1.5} />
+            <Text style={styles.temperatureText}>{metrics.Temperature}°</Text>
           </View>
         </Row>
         <Row size={4}>
           <Col>
             <Row>
-              <View style={styles.metricWrapper}>
-                <Text style={styles.metricValue}>{metrics.Humidity}%</Text>
-                <Text style={styles.metricLabel}>Humidity</Text>
-              </View>
+              <Col size={2}>
+                <Icon name='home' size={styles.metricValue.fontSize} />
+              </Col>
+              <Col size={10}>
+                <Text style={styles.metricValue}>{metrics.CO2} <Text style={{ fontSize: 8 }}>ppm</Text></Text>
+              </Col>
             </Row>
             <Row>
-              <View style={styles.metricWrapper}>
-                <Text style={styles.metricValue}>{metrics.CO2}ppm</Text>
-                <Text style={styles.metricLabel}>CO2</Text>
-              </View>
+              <Col size={2}>
+                <Icon name='battery' size={styles.metricValue.fontSize} />
+              </Col>
+              <Col size={10}>
+                <Text style={styles.metricValue}>{batteryPercent}%</Text>
+              </Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <View style={styles.metricWrapper}>
-                <Text style={styles.metricValue}>{batteryPercent}%</Text>
-                <Text style={styles.metricLabel}>Battery</Text>
-              </View>
+              <Col size={2}>
+                <Icon name='droplet' size={styles.metricValue.fontSize} />
+              </Col>
+              <Col size={10}>
+                <Text style={styles.metricValue}>{metrics.Humidity}%</Text>
+              </Col>
             </Row>
             <Row>
-              <View style={styles.metricWrapper}>
-                <Text style={styles.metricValue}>{isReachable ? 'yes' : 'no'}</Text>
-                <Text style={styles.metricLabel}>Reachable</Text>
-              </View>
+              <Col size={2}>
+                <Icon name={isReachable ? 'check' : 'x'} size={styles.metricValue.fontSize} />
+              </Col>
+              <Col size={10}>
+                <Text style={styles.metricValue}>{isReachable ? 'connected' : 'disconnected'}</Text>
+              </Col>
             </Row>
           </Col>
         </Row>
@@ -113,20 +122,15 @@ const styles = StyleSheet.create({
   temperatureWrapper: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   temperatureText: {
     fontSize: 32,
-  },
-  metricWrapper: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    paddingLeft: 5,
+    paddingRight: 5,
   },
   metricValue: {
     fontSize: 14,
-  },
-  metricLabel: {
-    fontSize: 10,
   },
 });
