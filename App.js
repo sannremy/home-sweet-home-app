@@ -170,32 +170,30 @@ export default class App extends React.Component {
           <Grid style={{ padding: styles.box.padding }}>
             <Col size={6}>
               <Row style={styles.box}>
-                <View style={styles.componentWrapper}>
+                <View style={[styles.componentWrapper, styles.componentWrapperBorder]}>
                   <Icon name='sun' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
                   {weatherComponent}
                 </View>
               </Row>
               <Row style={styles.box}>
-                <View style={styles.componentWrapper}>
+                <View style={[styles.componentWrapper, styles.componentWrapperBorder]}>
                   {indoorComponent}
                 </View>
               </Row>
             </Col>
             <Col size={6}>
               <Row style={styles.box}>
-                <View style={styles.componentWrapper}>
-                  <Icon name='map-pin' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
+                <View style={[styles.componentWrapper]}>
                   {trafficComponent}
                 </View>
               </Row>
               <Row style={styles.box}>
-                <View style={styles.componentWrapper}>
+                <View style={[styles.componentWrapper, styles.componentWrapperBorder]}>
                   {riverComponent}
                 </View>
               </Row>
               <Row style={styles.box}>
-                <View style={styles.componentWrapper}>
-                  <Icon name='wifi' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
+                <View style={[styles.componentWrapper]}>
                   {networkComponent}
                 </View>
               </Row>
@@ -286,6 +284,8 @@ const styles = StyleSheet.create({
   },
   componentWrapper: {
     flex: 1,
+  },
+  componentWrapperBorder: {
     borderWidth: 1,
     borderColor: '#f0f0f0',
     borderRadius: 10,
