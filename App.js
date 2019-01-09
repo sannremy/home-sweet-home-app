@@ -171,7 +171,6 @@ export default class App extends React.Component {
             <Col size={6}>
               <Row style={styles.box}>
                 <View style={[styles.componentWrapper, styles.componentWrapperBorder]}>
-                  <Icon name='sun' size={styles.menuItem.fontSize} color={styles.menuItem.color} />
                   {weatherComponent}
                 </View>
               </Row>

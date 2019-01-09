@@ -29,43 +29,43 @@ export default class Indoor extends React.Component {
         </Row>
         <Row size={6}>
           <View style={styles.temperatureWrapper}>
-            <Icon name='thermometer' size={styles.temperatureText.fontSize / 1.5} />
+            <Icon name='thermometer' size={styles.temperatureText.fontSize / 1.25} />
             <Text style={styles.temperatureText}>{metrics.Temperature}°</Text>
           </View>
         </Row>
         <Row size={4}>
           <Col>
             <Row>
-              <Col size={2}>
+              <Col size={3}>
                 <Icon name='home' size={styles.metricValue.fontSize} />
               </Col>
-              <Col size={10}>
+              <Col size={9}>
                 <Text style={styles.metricValue}>{metrics.CO2} <Text style={{ fontSize: 8 }}>ppm</Text></Text>
               </Col>
             </Row>
             <Row>
-              <Col size={2}>
+              <Col size={3}>
                 <Icon name='battery' size={styles.metricValue.fontSize} />
               </Col>
-              <Col size={10}>
+              <Col size={9}>
                 <Text style={styles.metricValue}>{batteryPercent}%</Text>
               </Col>
             </Row>
           </Col>
           <Col>
             <Row>
-              <Col size={2}>
+              <Col size={3}>
                 <Icon name='droplet' size={styles.metricValue.fontSize} />
               </Col>
-              <Col size={10}>
+              <Col size={9}>
                 <Text style={styles.metricValue}>{metrics.Humidity}%</Text>
               </Col>
             </Row>
             <Row>
-              <Col size={2}>
+              <Col size={3}>
                 <Icon name={isReachable ? 'check' : 'x'} size={styles.metricValue.fontSize} />
               </Col>
-              <Col size={10}>
+              <Col size={9}>
                 <Text style={styles.metricValue}>{isReachable ? 'connected' : 'disconnected'}</Text>
               </Col>
             </Row>
