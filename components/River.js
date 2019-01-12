@@ -37,8 +37,8 @@ export default class River extends React.Component {
           <Col>
             <Row>
               <View style={styles.levelWrapper}>
-                <Icon name='droplet' size={styles.levelText.fontSize} color={this.props.data.color} />
-                <Text style={[styles.levelText, { color: this.props.data.color }]}>{this.props.data.level}</Text>
+                <Icon name='droplet' size={styles.levelText.fontSize / 1.25} color={this.props.data.color} />
+                <Text style={[styles.levelText, { color: this.props.data.color }]}>{this.props.data.level} <Text style={{ fontSize: 16 }}>m</Text></Text>
               </View>
             </Row>
           </Col>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   levelText: {
     paddingLeft: 12,
-    fontSize: 52,
+    fontSize: 32,
     color: '#000'
   },
   icon: {
