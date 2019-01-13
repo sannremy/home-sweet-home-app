@@ -21,7 +21,7 @@ export default class Indoor extends React.Component {
     const isReachable = data.reachable;
 
     return (
-      <Grid style={{ padding: 20 }}>
+      <Grid style={styles.wrapper}>
         <Row size={2}>
           <View style={styles.moduleNameWrapper}>
             <Text style={styles.moduleNameText}>{data.module_name}</Text>
@@ -111,6 +111,9 @@ export default class Indoor extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    padding: 10,
+  },
   moduleNameWrapper: {
     flex: 1,
     justifyContent: 'center',
