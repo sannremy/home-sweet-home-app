@@ -89,20 +89,22 @@ export default class Weather extends React.Component {
   };
 
   _renderCurrent = () => {
+    const current = this.props.data.current;
+
     // Image icon
-    let iconCurrentSource = this._getIconImageSource(this.props.data.current.weather[0].icon);
+    let iconCurrentSource = this._getIconImageSource(current.weather[0].icon);
 
     return (
       <Col>
         <Row style={styles.currentCityNameWrapper}>
-          <Text style={styles.currentCityNameText}>{this.props.data.current.name}</Text>
+          <Text style={styles.currentCityNameText}>{current.name}</Text>
         </Row>
         <Row style={styles.currentConditionWrapper}>
           <Col>
             <Row>
               <View style={styles.currentConditionTemperatureWrapper}>
                 <Icon name='thermometer' size={styles.currentConditionTempText.fontSize / 1.25} />
-                <Text style={styles.currentConditionTempText}>{this._formatTemp(this.props.data.current.main.temp)}</Text>
+                <Text style={styles.currentConditionTempText}>{this._formatTemp(current.main.temp)}</Text>
               </View>
             </Row>
             <Row style={styles.currentConditionMetricWrapper}>
@@ -110,13 +112,13 @@ export default class Weather extends React.Component {
                 <Icon name='arrow-down' size={16} style={styles.currentMetricIcon} />
               </Col>
               <Col size={4}>
-                <Text style={styles.currentMetricText}>{this._formatTemp(this.props.data.current.main.temp_min)}</Text>
+                <Text style={styles.currentMetricText}>{this._formatTemp(current.main.temp_min)}</Text>
               </Col>
               <Col size={2}>
                 <Icon name='arrow-up' size={16} style={styles.currentMetricIcon} />
               </Col>
               <Col size={4}>
-                <Text style={styles.currentMetricText}>{this._formatTemp(this.props.data.current.main.temp_max)}</Text>
+                <Text style={styles.currentMetricText}>{this._formatTemp(current.main.temp_max)}</Text>
               </Col>
             </Row>
             <Row style={styles.currentConditionMetricWrapper}>
@@ -124,21 +126,26 @@ export default class Weather extends React.Component {
                 <Icon name='droplet' size={16} style={styles.currentMetricIcon} />
               </Col>
               <Col size={4}>
-                <Text style={styles.currentMetricText}>{this.props.data.current.main.humidity}%</Text>
+                <Text style={styles.currentMetricText}>{current.main.humidity}%</Text>
               </Col>
               <Col size={2}>
                 <Icon name='sunset' size={16} style={styles.currentMetricIcon} />
               </Col>
               <Col size={4}>
-                <Text style={styles.currentMetricText}>{(new Date(this.props.data.current.sys.sunset * 1000)).toLocaleTimeString('en-US', { hour12: false, hour: 'numeric', minute: 'numeric' })}</Text>
+                <Text style={styles.currentMetricText}>{(new Date(current.sys.sunset * 1000)).toLocaleTimeString('en-US', { hour12: false, hour: 'numeric', minute: 'numeric' })}</Text>
               </Col>
             </Row>
           </Col>
           <Col>
-            <Image
-              style={styles.currentConditionIcon}
-              source={iconCurrentSource}
-            />
+            <Row>
+              <Image
+                style={styles.currentConditionIcon}
+                source={iconCurrentSource}
+              />
+            </Row>
+            <Row>
+              <Text>{current.weather[0].main}</Text>
+            </Row>
           </Col>
         </Row>
       </Col>
@@ -166,6 +173,9 @@ export default class Weather extends React.Component {
               style={styles.forecastConditionIcon}
               source={iconForecastSource}
             />
+          </Row>
+          <Row>
+            <Text>{forecast.weather[0].main}</Text>
           </Row>
           <Row>
             <Col>
