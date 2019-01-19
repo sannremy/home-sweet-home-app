@@ -179,16 +179,16 @@ export default class Weather extends React.Component {
           </Row>
           <Row>
             <Col>
-              <Icon name='arrow-down' size={16} />
+              <Icon name='arrow-down' size={styles.forecastTemp.fontSize / 1.25} />
             </Col>
             <Col>
-              <Text>{this._formatTemp(forecast.temp.min)}</Text>
+              <Text style={styles.forecastTemp}>{this._formatTemp(forecast.temp.min)}</Text>
             </Col>
             <Col>
-              <Icon name='arrow-up' size={16} />
+              <Icon name='arrow-up' size={styles.forecastTemp.fontSize / 1.25} />
             </Col>
             <Col>
-              <Text>{this._formatTemp(forecast.temp.max)}</Text>
+              <Text style={styles.forecastTemp}>{this._formatTemp(forecast.temp.max)}</Text>
             </Col>
           </Row>
         </Col>
@@ -262,5 +262,8 @@ const styles = StyleSheet.create({
   forecastConditionIcon: {
     width: 64,
     height: 64,
+  },
+  forecastTemp: {
+    fontSize: 16
   }
 });
