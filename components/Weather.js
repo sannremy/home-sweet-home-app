@@ -101,7 +101,7 @@ export default class Weather extends React.Component {
         </Row>
         <Row style={styles.currentConditionWrapper}>
           <Col>
-            <Row>
+            <Row style={{ height: 'auto' }}>
               <View style={styles.currentConditionTemperatureWrapper}>
                 <Icon name='thermometer' size={styles.currentConditionTempText.fontSize / 1.25} />
                 <Text style={styles.currentConditionTempText}>{this._formatTemp(current.main.temp)}</Text>
@@ -143,9 +143,6 @@ export default class Weather extends React.Component {
                 source={iconCurrentSource}
               />
             </Row>
-            <Row>
-              <Text>{current.weather[0].main}</Text>
-            </Row>
           </Col>
         </Row>
       </Col>
@@ -173,9 +170,6 @@ export default class Weather extends React.Component {
               style={styles.forecastConditionIcon}
               source={iconForecastSource}
             />
-          </Row>
-          <Row>
-            <Text>{forecast.weather[0].main}</Text>
           </Row>
           <Row>
             <Col>
@@ -241,12 +235,16 @@ const styles = StyleSheet.create({
     height: 128,
   },
   currentConditionMetricWrapper: {
-    width: 120,
+    width: 150,
+    height: 'auto',
+    paddingTop: 5,
     alignSelf: 'center'
   },
   currentConditionTempText: {
     fontSize: 32,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    paddingLeft: 5,
+    paddingRight: 5,
   },
   currentMinMaxTempWrapper: {
     flex: 1,
