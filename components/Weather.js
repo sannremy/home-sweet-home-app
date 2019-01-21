@@ -100,7 +100,7 @@ export default class Weather extends React.Component {
           <Text style={styles.currentCityNameText}>{current.name}</Text>
         </Row>
         <Row style={styles.currentConditionWrapper}>
-          <Col>
+          <Col style={styles.currentConditionColWrapper}>
             <Row style={{ height: 'auto' }}>
               <View style={styles.currentConditionTemperatureWrapper}>
                 <Icon name='thermometer' size={styles.currentConditionTempText.fontSize / 1.25} />
@@ -162,16 +162,25 @@ export default class Weather extends React.Component {
 
       list.push((
         <Col key={'row-forecast-' + i}>
-          <Row>
+          <Row style={{    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',}}>
             <Text>{(new Date(forecast.dt * 1000)).toLocaleDateString('en-US', { weekday: 'short' })}</Text>
           </Row>
-          <Row>
+          <Row style={{    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',}}>
             <Image
               style={styles.forecastConditionIcon}
               source={iconForecastSource}
             />
           </Row>
-          <Row>
+          <Row style={{    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',}}>
             <Col>
               <Icon name='arrow-down' size={styles.forecastTemp.fontSize / 1.25} />
             </Col>
@@ -225,17 +234,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   currentConditionWrapper: {
-    // flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
     height: 128,
+  },
+  currentConditionColWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   currentConditionIcon: {
     width: 128,
     height: 128,
   },
   currentConditionMetricWrapper: {
-    width: 150,
+    width: 160,
     height: 'auto',
     paddingTop: 5,
     alignSelf: 'center'
