@@ -175,16 +175,12 @@ export default class Weather extends React.Component {
             />
           </Row>
           <Row style={styles.forecastTempWrapper}>
-            <Col>
-              <Icon name='arrow-down' size={styles.forecastTemp.fontSize / 1.25} />
-            </Col>
-            <Col>
+            <Col style={styles.forecastTempColWrapper}>
+              <Icon name='arrow-down' size={styles.forecastTemp.fontSize} />
               <Text style={styles.forecastTemp}>{this._formatTemp(forecast.temp.min)}</Text>
             </Col>
-            <Col>
-              <Icon name='arrow-up' size={styles.forecastTemp.fontSize / 1.25} />
-            </Col>
-            <Col>
+            <Col style={styles.forecastTempColWrapper}>
+              <Icon name='arrow-up' size={styles.forecastTemp.fontSize} />
               <Text style={styles.forecastTemp}>{this._formatTemp(forecast.temp.max)}</Text>
             </Col>
           </Row>
@@ -267,18 +263,23 @@ const styles = StyleSheet.create({
     height: 64,
   },
   forecastTemp: {
-    fontSize: 16
+    paddingLeft: 5,
+    fontSize: 16,
   },
   forecastTempWrapper: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row'
+    alignItems: 'center'
   },
   forecastDate: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center'
+  },
+  forecastTempColWrapper: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row'
-  },
+  }
 });
