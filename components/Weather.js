@@ -162,10 +162,7 @@ export default class Weather extends React.Component {
 
       list.push((
         <Col key={'row-forecast-' + i}>
-          <Row style={{    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',}}>
+          <Row style={styles.forecastDate}>
             <Text>{(new Date(forecast.dt * 1000)).toLocaleDateString('en-US', { weekday: 'short' })}</Text>
           </Row>
           <Row style={{    flex: 1,
@@ -177,10 +174,7 @@ export default class Weather extends React.Component {
               source={iconForecastSource}
             />
           </Row>
-          <Row style={{    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',}}>
+          <Row style={styles.forecastTempWrapper}>
             <Col>
               <Icon name='arrow-down' size={styles.forecastTemp.fontSize / 1.25} />
             </Col>
@@ -274,5 +268,17 @@ const styles = StyleSheet.create({
   },
   forecastTemp: {
     fontSize: 16
-  }
+  },
+  forecastTempWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  forecastDate: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
 });
