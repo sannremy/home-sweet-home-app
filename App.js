@@ -50,12 +50,11 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      refreshing: false,
-      riverData: null,
-      weatherData: null,
-      indoorData: null,
-      trafficData: null,
-      networkData: null,
+      river: null,
+      weather: null,
+      indoor: null,
+      traffic: null,
+      network: null,
     };
   }
 
@@ -102,21 +101,21 @@ export default class App extends React.Component {
     // }
   }
 
-  async componentDidMount() {
-    const riverData = await this._getServiceFromApi('river');
-    const weatherData = await this._getServiceFromApi('weather');
-    const indoorData = await this._getServiceFromApi('indoor');
-    const trafficData = await this._getServiceFromApi('traffic');
-    const networkData = await this._getServiceFromApi('network');
+  _refreshService = async (service) => {
+    const data = await this._getServiceFromApi(service);
+    const state = {};
+    state[service] = data;
 
-    this.setState({
-      refreshing: false,
-      riverData: riverData,
-      weatherData: weatherData,
-      indoorData: indoorData,
-      trafficData: trafficData,
-      networkData: networkData,
-    });
+    this.setState(state);
+  }
+
+  componentDidMount() {
+
+    this._refreshService('river');
+    this._refreshService('weather');
+    this._refreshService('indoor');
+    this._refreshService('traffic');
+    this._refreshService('network');
   }
 
   render() {
@@ -126,8 +125,8 @@ export default class App extends React.Component {
     // River
     let riverComponent = null;
 
-    if (this.state.riverData) {
-      riverComponent = <River data={this.state.riverData} />;
+    if (this.state.river) {
+      riverComponent = <River data={this.state.river} />;
     } else {
       riverComponent = loader;
     }
@@ -135,8 +134,8 @@ export default class App extends React.Component {
     // Weather
     let weatherComponent = null;
 
-    if (this.state.weatherData) {
-      weatherComponent = <Weather data={this.state.weatherData} />;
+    if (this.state.weather) {
+      weatherComponent = <Weather data={this.state.weather} />;
     } else {
       weatherComponent = loader;
     }
@@ -144,8 +143,8 @@ export default class App extends React.Component {
     // Indoor
     let indoorComponent = null;
 
-    if (this.state.indoorData) {
-      indoorComponent = <Indoor data={this.state.indoorData} />;
+    if (this.state.indoor) {
+      indoorComponent = <Indoor data={this.state.indoor} />;
     } else {
       indoorComponent = loader;
     }
@@ -153,8 +152,8 @@ export default class App extends React.Component {
     // Traffic
     let trafficComponent = null;
 
-    if (this.state.trafficData) {
-      trafficComponent = <Traffic data={this.state.trafficData} />;
+    if (this.state.traffic) {
+      trafficComponent = <Traffic data={this.state.traffic} />;
     } else {
       trafficComponent = loader;
     }
@@ -162,8 +161,8 @@ export default class App extends React.Component {
     // Network
     let networkComponent = null;
 
-    if (this.state.networkData) {
-      networkComponent = <Network data={this.state.networkData} />;
+    if (this.state.network) {
+      networkComponent = <Network data={this.state.network} />;
     } else {
       networkComponent = loader;
     }
