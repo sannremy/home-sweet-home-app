@@ -109,13 +109,13 @@ export default class Weather extends React.Component {
             </Row>
             <Row style={styles.currentConditionMetricWrapper}>
               <Col size={2}>
-                <Icon name='arrow-down' size={16} style={styles.currentMetricIcon} />
+                <Icon name='arrow-down' size={styles.currentMetricText.fontSize} style={styles.currentMetricIcon} />
               </Col>
               <Col size={4}>
                 <Text style={styles.currentMetricText}>{this._formatTemp(current.main.temp_min)}</Text>
               </Col>
               <Col size={2}>
-                <Icon name='arrow-up' size={16} style={styles.currentMetricIcon} />
+                <Icon name='arrow-up' size={styles.currentMetricText.fontSize} style={styles.currentMetricIcon} />
               </Col>
               <Col size={4}>
                 <Text style={styles.currentMetricText}>{this._formatTemp(current.main.temp_max)}</Text>
@@ -123,13 +123,13 @@ export default class Weather extends React.Component {
             </Row>
             <Row style={styles.currentConditionMetricWrapper}>
               <Col size={2}>
-                <Icon name='droplet' size={16} style={styles.currentMetricIcon} />
+                <Icon name='droplet' size={styles.currentMetricText.fontSize} style={styles.currentMetricIcon} />
               </Col>
               <Col size={4}>
                 <Text style={styles.currentMetricText}>{current.main.humidity}%</Text>
               </Col>
               <Col size={2}>
-                <Icon name='sunset' size={16} style={styles.currentMetricIcon} />
+                <Icon name='sunset' size={styles.currentMetricText.fontSize} style={styles.currentMetricIcon} />
               </Col>
               <Col size={4}>
                 <Text style={styles.currentMetricText}>{(new Date(current.sys.sunset * 1000)).toLocaleTimeString('en-US', { hour12: false, hour: 'numeric', minute: 'numeric' })}</Text>
@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
 
   },
   currentMetricText: {
+    fontSize: 14,
   },
   forecastConditionIcon: {
     width: 64,
@@ -264,7 +265,7 @@ const styles = StyleSheet.create({
   },
   forecastTemp: {
     paddingLeft: 5,
-    fontSize: 16,
+    fontSize: 14,
   },
   forecastTempWrapper: {
     flex: 1,

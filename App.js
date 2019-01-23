@@ -15,6 +15,7 @@ import {
 
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Feather';
+import * as Progress from 'react-native-progress';
 
 import River from './components/River';
 import Indoor from './components/Indoor';
@@ -119,13 +120,16 @@ export default class App extends React.Component {
   }
 
   render() {
+    // Loader
+    const loader = <Progress.Circle size={30} indeterminate={true} color='rgba(0, 0, 0, 1)' style={styles.loader} />;
+
     // River
     let riverComponent = null;
 
     if (this.state.riverData) {
       riverComponent = <River data={this.state.riverData} />;
     } else {
-      riverComponent = <Text>loading</Text>;
+      riverComponent = loader;
     }
 
     // Weather
@@ -134,7 +138,7 @@ export default class App extends React.Component {
     if (this.state.weatherData) {
       weatherComponent = <Weather data={this.state.weatherData} />;
     } else {
-      weatherComponent = <Text>loading</Text>;
+      weatherComponent = loader;
     }
 
     // Indoor
@@ -143,7 +147,7 @@ export default class App extends React.Component {
     if (this.state.indoorData) {
       indoorComponent = <Indoor data={this.state.indoorData} />;
     } else {
-      indoorComponent = <Text>loading</Text>;
+      indoorComponent = loader;
     }
 
     // Traffic
@@ -152,7 +156,7 @@ export default class App extends React.Component {
     if (this.state.trafficData) {
       trafficComponent = <Traffic data={this.state.trafficData} />;
     } else {
-      trafficComponent = <Text>loading</Text>;
+      trafficComponent = loader;
     }
 
     // Network
@@ -161,7 +165,7 @@ export default class App extends React.Component {
     if (this.state.networkData) {
       networkComponent = <Network data={this.state.networkData} />;
     } else {
-      networkComponent = <Text>loading</Text>;
+      networkComponent = loader;
     }
 
     return (
@@ -306,4 +310,9 @@ const styles = StyleSheet.create({
   menuItemHighlighted: {
     borderTopColor: colors.veryDark
   },
+  loader: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });

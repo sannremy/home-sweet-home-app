@@ -3,7 +3,8 @@ import React from 'react';
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  ScrollView
 } from 'react-native';
 
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -20,7 +21,7 @@ export default class Traffic extends React.Component {
     let list = [];
 
     list.push((
-      <Row key={'row-traffic-header'} style={styles.trafficHeaderRow}>
+      <Row key={'row-traffic-header'} size={2} style={styles.trafficHeaderRow}>
         <Col size={3}>
           <Icon name='clock' size={styles.trafficHeaderRow.fontSize} color={styles.trafficHeaderRow.color} />
         </Col>
@@ -34,12 +35,13 @@ export default class Traffic extends React.Component {
     ));
 
     let durations = this.props.data.durations;
+    let rows = [];
 
     for (let i = 0; i < durations.length; i++) {
       const formattedDuration = moment.duration(durations[i].duration, 'seconds').humanize();
-      const altStyleRow = i % 2 === 0 ? styles.trafficRowOdd : styles.trafficRowEven;
-      list.push((
-        <Row key={'row-traffic-' + i} style={[styles.trafficRow, altStyleRow]}>
+      const trafficFirstRow = i === 0 ? styles.trafficFirstRow : null;
+      rows.push((
+        <Row key={'row-traffic-' + i} style={[styles.trafficRow, trafficFirstRow]}>
           <Col size={3}>
             <Text>{formattedDuration}</Text>
           </Col>
@@ -47,11 +49,22 @@ export default class Traffic extends React.Component {
             <Text>{durations[i].label}</Text>
           </Col>
           <Col size={2}>
-            <Text>{Math.round(durations[i].distance/1000, 1)} km</Text>
+            {/*<Text>{Math.round(durations[i].distance/1000, 1)} km</Text>*/}
+            <Text>{Math.round(durations[i].distance/1000 / (durations[i].duration / 3600), 1)} km/h</Text>
           </Col>
         </Row>
       ));
     }
+
+    list.push((
+      <Row size={10} key='row-traffic-wrapper'>
+        <ScrollView>
+          <Grid>
+            {rows}
+          </Grid>
+        </ScrollView>
+      </Row>
+    ));
 
     return (
       <Grid style={styles.wrapper}>
@@ -72,7 +85,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: '#f0f0f0',
     fontSize: 16,
-    color: '#000'
+    color: '#000',
+    paddingTop: 10,
+    paddingBottom: 10,
   },
   trafficRow: {
     flex: 1,
@@ -80,9 +95,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderTopWidth: 1,
     borderTopColor: '#f0f0f0',
+    paddingTop: 10,
+    paddingBottom: 10,
   },
-  trafficRowOdd: {
-  },
-  trafficRowEven: {
+  trafficFirstRow: {
+    borderTopWidth: 0
   },
 });
