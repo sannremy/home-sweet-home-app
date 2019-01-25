@@ -33,7 +33,7 @@ export default class River extends React.Component {
 
     return (
       <Grid style={styles.wrapper}>
-        <Row size={11}>
+        <Row size={9}>
           <Col>
             <Row>
               <View style={styles.levelWrapper}>
@@ -43,7 +43,7 @@ export default class River extends React.Component {
             </Row>
           </Col>
         </Row>
-        <Row size={1}>
+        <Row size={3}>
           <View style={styles.date}>
             {dateComponent}
           </View>
