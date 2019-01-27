@@ -9,10 +9,10 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "expo": "^31.0.6",
+    "expo": "^32.0.2-rc.0",
     "moment": "^2.23.0",
-    "react": "^16.6.3",
-    "react-native": "^0.57.8",
+    "react": "16.6.3",
+    "react-native": "0.57.8",
     "react-native-dotenv": "^0.2.0",
     "react-native-easy-grid": "^0.2.0",
     "react-native-progress": "^3.5.0",
