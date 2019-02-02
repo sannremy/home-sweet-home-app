@@ -30,7 +30,7 @@ export default class Indoor extends React.Component {
         <Row size={6}>
           <View style={styles.temperatureWrapper}>
             <Icon name='thermometer' size={styles.temperatureText.fontSize / 1.25} />
-            <Text style={styles.temperatureText}>{metrics.Temperature}°</Text>
+            <Text style={styles.temperatureText}>{isReachable ? metrics.Temperature : '- '}°</Text>
           </View>
         </Row>
         <Row size={4}>
@@ -40,7 +40,7 @@ export default class Indoor extends React.Component {
                 <Icon name='home' size={styles.metricValue.fontSize} />
               </Col>
               <Col size={9}>
-                <Text style={styles.metricValue}>{metrics.CO2} <Text style={{ fontSize: 8 }}>ppm</Text></Text>
+                <Text style={styles.metricValue}>{isReachable ? metrics.CO2 : '- '} <Text style={{ fontSize: 8 }}>ppm</Text></Text>
               </Col>
             </Row>
             <Row>
@@ -58,7 +58,7 @@ export default class Indoor extends React.Component {
                 <Icon name='droplet' size={styles.metricValue.fontSize} />
               </Col>
               <Col size={9}>
-                <Text style={styles.metricValue}>{metrics.Humidity}%</Text>
+                <Text style={styles.metricValue}>{isReachable ? metrics.Humidity : '- '}%</Text>
               </Col>
             </Row>
             <Row>
@@ -66,7 +66,7 @@ export default class Indoor extends React.Component {
                 <Icon name={isReachable ? 'check' : 'x'} size={styles.metricValue.fontSize} />
               </Col>
               <Col size={9}>
-                <Text style={styles.metricValue}>{isReachable ? 'connected' : 'disconnected'}</Text>
+                <Text style={styles.metricValue}>{isReachable ? 'on' : 'off'}</Text>
               </Col>
             </Row>
           </Col>
