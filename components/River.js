@@ -33,7 +33,12 @@ export default class River extends React.Component {
 
     return (
       <Grid style={styles.wrapper}>
-        <Row size={9}>
+        <Row size={2}>
+          <View style={styles.name}>
+          <Text>{this.props.data.name}</Text>
+          </View>
+        </Row>
+        <Row size={8}>
           <Col>
             <Row>
               <View style={styles.levelWrapper}>
@@ -43,7 +48,7 @@ export default class River extends React.Component {
             </Row>
           </Col>
         </Row>
-        <Row size={3}>
+        <Row size={2}>
           <View style={styles.date}>
             {dateComponent}
           </View>
@@ -56,6 +61,11 @@ export default class River extends React.Component {
 const styles = StyleSheet.create({
   wrapper: {
     padding: 20
+  },
+  name: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   date: {
     flex: 1,
