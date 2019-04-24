@@ -137,7 +137,7 @@ export default class Weather extends React.Component {
             </Row>
           </Col>
           <Col>
-            <Row>
+            <Row style={styles.currentConditionIconWrapper}>
               <Image
                 style={styles.currentConditionIcon}
                 source={iconCurrentSource}
@@ -231,9 +231,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  currentConditionIconWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   currentConditionIcon: {
-    width: 128,
-    height: 128,
+    width: 80,
+    height: 80,
   },
   currentConditionMetricWrapper: {
     width: 160,
