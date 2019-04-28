@@ -4,5 +4,5 @@ Dashboard of home insights
 
 ## Run
 ```
-yarn run ios
+react-native run-ios
 ```
