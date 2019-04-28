@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import {
   StyleSheet,
@@ -10,7 +10,8 @@ import {
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Feather';
 
-export default class Network extends React.Component {
+type Props = {};
+export default class Network extends Component<Props> {
 
   constructor(props) {
     super(props);

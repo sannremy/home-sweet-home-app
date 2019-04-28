@@ -1,10 +1,10 @@
+# Config
+#
+.env
+
 # OSX
 #
 .DS_Store
-
-# Build
-.expo
-.env
 
 # Xcode
 #
