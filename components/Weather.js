@@ -9,9 +9,9 @@ import {
 
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Feather';
-import moment from 'moment';
 
-export default class Weather extends React.Component {
+type Props = {};
+export default class Weather extends Component<Props> {
 
   constructor(props) {
     super(props);

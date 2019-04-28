@@ -9,7 +9,8 @@ import {
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Feather';
 
-export default class River extends React.Component {
+type Props = {};
+export default class River extends Component<Props> {
 
   constructor(props) {
     super(props);
