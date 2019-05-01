@@ -54,8 +54,6 @@ export default class App extends Component<Props, State> {
       ios: () => NativeModules.SettingsManager.settings.AppleLocale,
       android: () => NativeModules.I18nManager.localeIdentifier,
     })();
-
-    this.locale = 'fr_FR';
   }
 
   _getServiceFromApi = async (view) => {

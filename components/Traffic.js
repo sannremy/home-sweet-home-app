@@ -13,7 +13,7 @@ import {
 
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Feather';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales';
 
 type Props = {
   data: Object,
@@ -24,6 +24,7 @@ export default class Traffic extends Component<Props> {
 
   constructor(props) {
     super(props);
+    moment.locale(props.locale);
   }
 
   render() {
