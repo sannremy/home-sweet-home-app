@@ -13,7 +13,7 @@ import {
 
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Feather';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales';
 
 type Props = {
   data: Object,
@@ -24,6 +24,7 @@ export default class River extends Component<Props> {
 
   constructor(props) {
     super(props);
+    moment.locale(props.locale);
   }
 
   render() {
@@ -33,13 +34,7 @@ export default class River extends Component<Props> {
 
     if (this.props.data.date) {
       date = new Date(this.props.data.date);
-      dateComponent = <Text>{date.toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit'
-      })}</Text>;
+      dateComponent = <Text>{moment(date).format('LLL')}</Text>;
     }
 
     return (

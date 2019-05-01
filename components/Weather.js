@@ -14,6 +14,7 @@ import {
 
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Feather';
+import moment from 'moment/min/moment-with-locales';
 
 type Props = {
   data: Object,
@@ -24,8 +25,7 @@ export default class Weather extends Component<Props> {
 
   constructor(props) {
     super(props);
-
-    this._date = new Date();
+    moment.locale(props.locale);
   }
 
   _formatTemp(temperature) {
@@ -141,7 +141,7 @@ export default class Weather extends Component<Props> {
                 <Icon name='sunset' size={styles.currentMetricText.fontSize} style={styles.currentMetricIcon} />
               </Col>
               <Col size={4}>
-                <Text style={styles.currentMetricText}>{(new Date(current.sys.sunset * 1000)).toLocaleTimeString('en-US', { hour12: false, hour: 'numeric', minute: 'numeric' })}</Text>
+                <Text style={styles.currentMetricText}>{moment(new Date(current.sys.sunset * 1000)).format('LT')}</Text>
               </Col>
             </Row>
           </Col>
@@ -172,7 +172,7 @@ export default class Weather extends Component<Props> {
       list.push((
         <Col key={'row-forecast-' + i}>
           <Row style={styles.forecastDate}>
-            <Text>{(new Date(forecast.dt * 1000)).toLocaleDateString('en-US', { weekday: 'short' })}</Text>
+            <Text>{moment(new Date(forecast.dt * 1000)).format('ddd')}</Text>
           </Row>
           <Row style={{    flex: 1,
     justifyContent: 'center',
