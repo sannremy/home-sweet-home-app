@@ -14,7 +14,10 @@ import {
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Feather';
 
-type Props = {};
+type Props = {
+  data: Object
+};
+
 export default class River extends Component<Props> {
 
   constructor(props) {

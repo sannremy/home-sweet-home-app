@@ -26,16 +26,26 @@ import Weather from './components/Weather';
 import Control from './components/Control';
 
 type Props = {};
-export default class App extends Component<Props> {
+
+type State = {
+  river: Object,
+  weather: Object,
+  indoor: Object,
+  traffic: Object,
+  network: Object,
+};
+
+export default class App extends Component<Props, State> {
+  state = {
+    river: null,
+    weather: null,
+    indoor: null,
+    traffic: null,
+    network: null,
+  };
+
   constructor(props) {
     super(props);
-    this.state = {
-      river: null,
-      weather: null,
-      indoor: null,
-      traffic: null,
-      network: null,
-    };
   }
 
   _getServiceFromApi = async (view) => {
