@@ -14,10 +14,11 @@ import {
 
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Feather';
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales';
 
 type Props = {
-  data: Object
+  data: Object,
+  locale: String
 };
 
 export default class Control extends Component<Props> {
@@ -25,6 +26,7 @@ export default class Control extends Component<Props> {
   constructor(props) {
     super(props);
 
+    moment.locale(props.locale);
     const lastUpdateDate = new Date();
 
     this.state = {
@@ -57,7 +59,7 @@ export default class Control extends Component<Props> {
     return (
       <Grid style={styles.wrapper}>
         <Row style={styles.rowWrapper}>
-          <Col size={3}>
+          <Col size={2}>
             <TouchableHighlight
               style={styles.refreshButtonTouchable}
               underlayColor='#4183d7'
@@ -65,11 +67,11 @@ export default class Control extends Component<Props> {
             >
               <View style={styles.refreshButtonView}>
                 <Icon name='refresh-cw' size={16} color={styles.refreshButtonText.color} />
-                <Text style={styles.refreshButtonText}>Refresh</Text>
+                {/* <Text style={styles.refreshButtonText}>Refresh</Text> */}
               </View>
             </TouchableHighlight>
           </Col>
-          <Col size={9}>
+          <Col size={10}>
             <Text style={styles.lastUpdateText}>{this.state.lastUpdateText}</Text>
           </Col>
         </Row>

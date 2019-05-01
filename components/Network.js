@@ -15,7 +15,8 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Feather';
 
 type Props = {
-  data: Object
+  data: Object,
+  locale: String
 };
 
 export default class Network extends Component<Props> {

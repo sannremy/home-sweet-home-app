@@ -13,6 +13,8 @@ import {
   StyleSheet,
   View,
   SafeAreaView,
+  Platform,
+  NativeModules
 } from 'react-native';
 
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -46,6 +48,14 @@ export default class App extends Component<Props, State> {
 
   constructor(props) {
     super(props);
+
+    // Get user locale
+    this.locale = Platform.select({
+      ios: () => NativeModules.SettingsManager.settings.AppleLocale,
+      android: () => NativeModules.I18nManager.localeIdentifier,
+    })();
+
+    this.locale = 'fr_FR';
   }
 
   _getServiceFromApi = async (view) => {
@@ -101,7 +111,7 @@ export default class App extends Component<Props, State> {
     let riverComponent = null;
 
     if (this.state.river) {
-      riverComponent = <River data={this.state.river} />;
+      riverComponent = <River data={this.state.river} locale={this.locale} />;
     } else {
       riverComponent = loader;
     }
@@ -110,7 +120,7 @@ export default class App extends Component<Props, State> {
     let weatherComponent = null;
 
     if (this.state.weather) {
-      weatherComponent = <Weather data={this.state.weather} />;
+      weatherComponent = <Weather data={this.state.weather} locale={this.locale} />;
     } else {
       weatherComponent = loader;
     }
@@ -119,7 +129,7 @@ export default class App extends Component<Props, State> {
     let indoorComponent = null;
 
     if (this.state.indoor) {
-      indoorComponent = <Indoor data={this.state.indoor} />;
+      indoorComponent = <Indoor data={this.state.indoor} locale={this.locale} />;
     } else {
       indoorComponent = loader;
     }
@@ -128,7 +138,7 @@ export default class App extends Component<Props, State> {
     let trafficComponent = null;
 
     if (this.state.traffic) {
-      trafficComponent = <Traffic data={this.state.traffic} />;
+      trafficComponent = <Traffic data={this.state.traffic} locale={this.locale} />;
     } else {
       trafficComponent = loader;
     }
@@ -137,7 +147,7 @@ export default class App extends Component<Props, State> {
     let networkComponent = null;
 
     if (this.state.network) {
-      networkComponent = <Network data={this.state.network} />;
+      networkComponent = <Network data={this.state.network} locale={this.locale} />;
     } else {
       networkComponent = loader;
     }
@@ -161,7 +171,7 @@ export default class App extends Component<Props, State> {
             <Col size={6}>
               <Row size={1} style={styles.box}>
                 <View style={[styles.componentWrapper, styles.componentWrapperControl]}>
-                  <Control onPressRefreshButton={this._refreshAllServices} />
+                  <Control onPressRefreshButton={this._refreshAllServices} locale={this.locale} />
                 </View>
               </Row>
               <Row size={4} style={styles.box}>

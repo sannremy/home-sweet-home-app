@@ -16,7 +16,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import moment from 'moment';
 
 type Props = {
-  data: Object
+  data: Object,
+  locale: String
 };
 
 export default class Traffic extends Component<Props> {
