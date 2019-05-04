@@ -34,7 +34,7 @@ export default class River extends Component<Props> {
 
     if (this.props.data.date) {
       date = new Date(this.props.data.date);
-      dateComponent = <Text>{moment(date).format('LLL')}</Text>;
+      dateComponent = <Text>{moment(date).calendar()}</Text>;
     }
 
     return (

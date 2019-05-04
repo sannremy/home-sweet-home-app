@@ -40,7 +40,7 @@ export default class Indoor extends Component<Props> {
         <Row size={6}>
           <View style={styles.temperatureWrapper}>
             <Icon name='thermometer' size={styles.temperatureText.fontSize / 1.25} />
-            <Text style={styles.temperatureText}>{isReachable ? metrics.Temperature : '- '}°</Text>
+            <Text style={styles.temperatureText}>{isReachable ? Math.round(metrics.Temperature) : '- '}°</Text>
           </View>
         </Row>
         <Row size={4}>
