@@ -14,11 +14,11 @@ import {
   View,
   SafeAreaView,
   Platform,
-  NativeModules
+  NativeModules,
+  ActivityIndicator
 } from 'react-native';
 
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import * as Progress from 'react-native-progress';
 
 import River from './components/River';
 import Indoor from './components/Indoor';
@@ -103,7 +103,7 @@ export default class App extends Component<Props, State> {
 
   render() {
     // Loader
-    const loader = <Progress.Circle size={30} indeterminate={true} color='rgba(0, 0, 0, 1)' style={styles.loader} />;
+    const loader = <ActivityIndicator size='large' style={styles.loader} />;
 
     // River
     let riverComponent = null;

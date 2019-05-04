@@ -9,7 +9,8 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  Modal
 } from 'react-native';
 
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -31,7 +32,8 @@ export default class Control extends Component<Props> {
 
     this.state = {
       lastUpdateDate: lastUpdateDate,
-      lastUpdateText: moment(lastUpdateDate).fromNow()
+      lastUpdateText: moment(lastUpdateDate).fromNow(),
+      settingsModalVisible: false,
     };
 
     this._initAutoRefreshLastUpdateDuration();
@@ -45,7 +47,7 @@ export default class Control extends Component<Props> {
     }, 60000);
   }
 
-  _onPressButton = () => {
+  _onPressRefreshButton = () => {
     this.props.onPressRefreshButton();
 
     const lastUpdateDate = new Date();
@@ -54,25 +56,63 @@ export default class Control extends Component<Props> {
       lastUpdateText: moment(lastUpdateDate).fromNow()
     });
   }
+  
+  _onPressSettingsButton = () => {
+    this.setSettingsModalVisible(true);
+  }
+
+  setSettingsModalVisible(visible) {
+    this.setState({settingsModalVisible: visible});
+  }
 
   render() {
     return (
       <Grid style={styles.wrapper}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.settingsModalVisible}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 22}}>
+            <View>
+              <Text>Hello World!</Text>
+
+              <TouchableHighlight
+                onPress={() => {
+                  this.setSettingsModalVisible(!this.state.settingsModalVisible);
+                }}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
         <Row style={styles.rowWrapper}>
           <Col size={2}>
             <TouchableHighlight
               style={styles.refreshButtonTouchable}
               underlayColor='#4183d7'
-              onPress={this._onPressButton}
+              onPress={this._onPressRefreshButton}
             >
               <View style={styles.refreshButtonView}>
                 <Icon name='refresh-cw' size={16} color={styles.refreshButtonText.color} />
-                {/* <Text style={styles.refreshButtonText}>Refresh</Text> */}
               </View>
             </TouchableHighlight>
           </Col>
           <Col size={10}>
             <Text style={styles.lastUpdateText}>{this.state.lastUpdateText}</Text>
+          </Col>
+          <Col size={1}>
+            <TouchableHighlight
+              style={styles.settingsButtonTouchable}
+              underlayColor='#fff'
+              onPress={this._onPressSettingsButton}
+            >
+              <View style={styles.settingsButtonView}>
+                <Icon name='sliders' size={16} color={styles.settingsButtonView.color} />
+              </View>
+            </TouchableHighlight>
           </Col>
         </Row>
       </Grid>
@@ -111,4 +151,14 @@ const styles = StyleSheet.create({
   lastUpdateText: {
     paddingLeft: 10,
   },
+  settingsButtonTouchable: {
+    flexDirection: 'row',
+  },
+  settingsButtonView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    color: '#000',
+  }
 });
