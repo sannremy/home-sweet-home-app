@@ -10,7 +10,8 @@ import {
   Text,
   View,
   TouchableHighlight,
-  Modal
+  Modal,
+  Alert
 } from 'react-native';
 
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -33,7 +34,7 @@ export default class Control extends Component<Props> {
     this.state = {
       lastUpdateDate: lastUpdateDate,
       lastUpdateText: moment(lastUpdateDate).fromNow(),
-      settingsModalVisible: false,
+      isSettingsModalVisible: false,
     };
 
     this._initAutoRefreshLastUpdateDuration();
@@ -58,11 +59,19 @@ export default class Control extends Component<Props> {
   }
   
   _onPressSettingsButton = () => {
-    this.setSettingsModalVisible(true);
+    this._setSettingsModalVisible(true);
   }
 
-  setSettingsModalVisible(visible) {
-    this.setState({settingsModalVisible: visible});
+  _setSettingsModalVisible = (visible) => {
+    this.setState({isSettingsModalVisible: visible});
+  }
+
+  _onOpenSettingsModal = () => {
+    Alert.alert('Modal has been opened.');
+  }
+
+  _onCloseSettingsModal = () => {
+    Alert.alert('Modal has been closed.');
   }
 
   render() {
@@ -70,22 +79,20 @@ export default class Control extends Component<Props> {
       <Grid style={styles.wrapper}>
         <Modal
           animationType="slide"
-          transparent={false}
-          visible={this.state.settingsModalVisible}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
-          <View style={{marginTop: 22}}>
-            <View>
-              <Text>Hello World!</Text>
+          transparent={true}
+          visible={this.state.isSettingsModalVisible}
+          onShow={this._onOpenSettingsModal}
+          onDismiss={this._onCloseSettingsModal}
+          onRequestClose={this._onCloseSettingsModal}>
+          <View>
+            <Text>Hello World!</Text>
 
-              <TouchableHighlight
-                onPress={() => {
-                  this.setSettingsModalVisible(!this.state.settingsModalVisible);
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
+            <TouchableHighlight
+              onPress={() => {
+                this._setSettingsModalVisible(!this.state.isSettingsModalVisible);
+              }}>
+              <Text>Hide Modal</Text>
+            </TouchableHighlight>
           </View>
         </Modal>
         <Row style={styles.rowWrapper}>
