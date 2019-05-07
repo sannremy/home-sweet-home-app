@@ -9,11 +9,11 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight,
-  Modal,
-  Alert
+  TouchableHighlight
 } from 'react-native';
 
+import Slider from '@react-native-community/slider';
+import Modal from 'react-native-modal';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import Icon from 'react-native-vector-icons/Feather';
 import moment from 'moment/min/moment-with-locales';
@@ -35,6 +35,7 @@ export default class Control extends Component<Props> {
       lastUpdateDate: lastUpdateDate,
       lastUpdateText: moment(lastUpdateDate).fromNow(),
       isSettingsModalVisible: false,
+      refreshIntervalValue: 15,
     };
 
     this._initAutoRefreshLastUpdateDuration();
@@ -63,38 +64,85 @@ export default class Control extends Component<Props> {
   }
 
   _setSettingsModalVisible = (visible) => {
-    this.setState({isSettingsModalVisible: visible});
+    this.setState({
+      isSettingsModalVisible: visible
+    });
   }
 
-  _onOpenSettingsModal = () => {
-    Alert.alert('Modal has been opened.');
+  _onValueChangeRefreshInterval = (value) => {
+    this.setState({
+      refreshIntervalValue: value
+    });
   }
 
-  _onCloseSettingsModal = () => {
-    Alert.alert('Modal has been closed.');
+  _formatRefreshIntervalValue = (value) => {
+    const output = '';
+    const duration = moment.duration(value, 'minutes');
+    const hours = ('' + duration.hours()).padStart(2, '0');
+    const minutes = ('' + duration.minutes()).padStart(2, '0');
+    return hours + ':' + minutes;
   }
+
+  _renderSettingsModal = () => {
+    return (
+      <Modal
+        isVisible={this.state.isSettingsModalVisible}
+        backdropOpacity={0.5}
+        onSwipeComplete={() => {
+          this._setSettingsModalVisible(!this.state.isSettingsModalVisible);
+        }}
+        onBackdropPress={() => {
+          this._setSettingsModalVisible(!this.state.isSettingsModalVisible);
+        }}
+        swipeDirection={['down']}
+        style={{
+          justifyContent: 'flex-end',
+          margin: 0,
+        }}
+      >
+        <View style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#fff',
+          padding: 20
+        }}>
+          <Grid style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <Row>
+              <Col size={2}><Text>every</Text></Col>
+              <Col size={2}><Text>day</Text></Col>
+            </Row>
+          </Grid>
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <Icon name='refresh-cw' size={16} />
+            <Text>Refresh Interval</Text>
+            <Slider
+              style={{width: 200, height: 40}}
+              minimumValue={15}
+              maximumValue={180}
+              step={15}
+              value={this.state.refreshIntervalValue}
+              minimumTrackTintColor='#000000'
+              maximumTrackTintColor='#cccccc'
+              onValueChange={this._onValueChangeRefreshInterval}
+            />
+            <Text>{this._formatRefreshIntervalValue(this.state.refreshIntervalValue)}</Text>
+          </View>
+        </View>
+      </Modal>
+    );
+  } 
 
   render() {
     return (
       <Grid style={styles.wrapper}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={this.state.isSettingsModalVisible}
-          onShow={this._onOpenSettingsModal}
-          onDismiss={this._onCloseSettingsModal}
-          onRequestClose={this._onCloseSettingsModal}>
-          <View>
-            <Text>Hello World!</Text>
-
-            <TouchableHighlight
-              onPress={() => {
-                this._setSettingsModalVisible(!this.state.isSettingsModalVisible);
-              }}>
-              <Text>Hide Modal</Text>
-            </TouchableHighlight>
-          </View>
-        </Modal>
         <Row style={styles.rowWrapper}>
           <Col size={2}>
             <TouchableHighlight
@@ -122,6 +170,7 @@ export default class Control extends Component<Props> {
             </TouchableHighlight>
           </Col>
         </Row>
+        {this._renderSettingsModal()}
       </Grid>
     );
   }
@@ -149,7 +198,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row'
   },
   refreshButtonText: {
     paddingLeft: 10,
