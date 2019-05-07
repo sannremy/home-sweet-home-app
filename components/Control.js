@@ -106,22 +106,10 @@ export default class Control extends Component<Props> {
           backgroundColor: '#fff',
           padding: 20
         }}>
-          <Grid style={{
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <Row>
-              <Col size={2}><Text>every</Text></Col>
-              <Col size={2}><Text>day</Text></Col>
-            </Row>
-          </Grid>
           <View style={{
-            flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-            <Icon name='refresh-cw' size={16} />
             <Text>Refresh Interval</Text>
             <Slider
               style={{width: 200, height: 40}}
