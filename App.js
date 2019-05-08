@@ -15,10 +15,12 @@ import {
   SafeAreaView,
   Platform,
   NativeModules,
-  ActivityIndicator
+  ActivityIndicator,
+  Text,
 } from 'react-native';
 
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import Icon from 'react-native-vector-icons/Feather';
 
 import River from './components/River';
 import Indoor from './components/Indoor';
@@ -39,11 +41,26 @@ type State = {
 
 export default class App extends Component<Props, State> {
   state = {
-    river: null,
-    weather: null,
-    indoor: null,
-    traffic: null,
-    network: null,
+    river: {
+      data: null,
+      err: null,
+    },
+    weather: {
+      data: null,
+      err: null,
+    },
+    indoor: {
+      data: null,
+      err: null,
+    },
+    traffic: {
+      data: null,
+      err: null,
+    },
+    network: {
+      data: null,
+      err: null,
+    },
   };
 
   constructor(props) {
@@ -73,19 +90,28 @@ export default class App extends Component<Props, State> {
       let responseJson = await response.json();
       return responseJson;
     } catch (error) {
-      console.error(error);
+      throw error;
     }
   };
 
   _refreshService = async (service) => {
     // Refresh
     let state = {};
-    state[service] = null;
+    state[service] = {
+      data: null,
+      err: null,
+    };
+
     this.setState(state);
 
     // Fetch new data
-    const data = await this._getServiceFromApi(service);
-    state[service] = data;
+    try {
+      const data = await this._getServiceFromApi(service);
+      state[service].data = data;
+    } catch (error) {
+      state[service].err = error;
+    }
+
     this.setState(state);
   }
 
@@ -97,6 +123,20 @@ export default class App extends Component<Props, State> {
     this._refreshService('network');
   };
 
+  _getErrorComponent(error) {
+    let errorText = null;
+    if (error) {
+      errorText = <Text>{JSON.stringify(error)}</Text>;
+    }
+
+    return (
+      <View style={styles.error}>
+        <Icon name='wifi-off' size={styles.error.fontSize} />
+        {errorText}
+      </View>
+    );
+  }
+
   componentDidMount() {
     this._refreshAllServices();
   }
@@ -106,48 +146,58 @@ export default class App extends Component<Props, State> {
     const loader = <ActivityIndicator size='large' style={styles.loader} />;
 
     // River
-    let riverComponent = null;
+    let riverComponent = loader;
 
     if (this.state.river) {
-      riverComponent = <River data={this.state.river} locale={this.locale} />;
-    } else {
-      riverComponent = loader;
+      if (this.state.river.data) {
+        riverComponent = <River data={this.state.river} locale={this.locale} />;
+      } else {
+        riverComponent = this._getErrorComponent(this.state.river.err);
+      }
     }
 
     // Weather
-    let weatherComponent = null;
+    let weatherComponent = loader;
 
     if (this.state.weather) {
-      weatherComponent = <Weather data={this.state.weather} locale={this.locale} />;
-    } else {
-      weatherComponent = loader;
+      if (this.state.weather.data) {
+        weatherComponent = <Weather data={this.state.weather} locale={this.locale} />;
+      } else {
+        weatherComponent = this._getErrorComponent(this.state.weather.err);
+      }
     }
 
     // Indoor
-    let indoorComponent = null;
+    let indoorComponent = loader;
 
     if (this.state.indoor) {
-      indoorComponent = <Indoor data={this.state.indoor} locale={this.locale} />;
-    } else {
-      indoorComponent = loader;
+      if (this.state.indoor.data) {
+        indoorComponent = <Indoor data={this.state.indoor} locale={this.locale} />;
+      } else {
+        indoorComponent = this._getErrorComponent(this.state.indoor.err);
+      }
     }
 
     // Traffic
-    let trafficComponent = null;
+    let trafficComponent = loader;
 
     if (this.state.traffic) {
-      trafficComponent = <Traffic data={this.state.traffic} locale={this.locale} />;
-    } else {
-      trafficComponent = loader;
+      if (this.state.traffic.data) {
+        trafficComponent = <Traffic data={this.state.traffic} locale={this.locale} />;
+      } else {
+        trafficComponent = this._getErrorComponent(this.state.traffic.err);
+      }
     }
 
     // Network
-    let networkComponent = null;
+    let networkComponent = loader;
 
     if (this.state.network) {
-      networkComponent = <Network data={this.state.network} locale={this.locale} />;
-    } else {
-      networkComponent = loader;
+      if (this.state.network.data) {
+        networkComponent = <Network data={this.state.network} locale={this.locale} />;
+      } else {
+        networkComponent = this._getErrorComponent(this.state.network.err);
+      }
     }
 
     return (
@@ -223,5 +273,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  error: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 30,
   }
 });
