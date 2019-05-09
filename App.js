@@ -147,57 +147,42 @@ export default class App extends Component<Props, State> {
 
     // River
     let riverComponent = loader;
-
-    if (this.state.river) {
-      if (this.state.river.data) {
-        riverComponent = <River data={this.state.river} locale={this.locale} />;
-      } else {
-        riverComponent = this._getErrorComponent(this.state.river.err);
-      }
+    if (this.state.river.data) {
+      riverComponent = <River data={this.state.river.data} locale={this.locale} />;
+    } else if (this.state.river.err) {
+      riverComponent = this._getErrorComponent(this.state.river.err);
     }
 
     // Weather
     let weatherComponent = loader;
-
-    if (this.state.weather) {
-      if (this.state.weather.data) {
-        weatherComponent = <Weather data={this.state.weather} locale={this.locale} />;
-      } else {
-        weatherComponent = this._getErrorComponent(this.state.weather.err);
-      }
+    if (this.state.weather.data) {
+      weatherComponent = <Weather data={this.state.weather.data} locale={this.locale} />;
+    } else if (this.state.weather.err) {
+      weatherComponent = this._getErrorComponent(this.state.weather.err);
     }
 
     // Indoor
     let indoorComponent = loader;
-
-    if (this.state.indoor) {
-      if (this.state.indoor.data) {
-        indoorComponent = <Indoor data={this.state.indoor} locale={this.locale} />;
-      } else {
-        indoorComponent = this._getErrorComponent(this.state.indoor.err);
-      }
+    if (this.state.indoor.data) {
+      indoorComponent = <Indoor data={this.state.indoor.data} locale={this.locale} />;
+    } else if (this.state.indoor.err) {
+      indoorComponent = this._getErrorComponent(this.state.indoor.err);
     }
 
     // Traffic
     let trafficComponent = loader;
-
-    if (this.state.traffic) {
-      if (this.state.traffic.data) {
-        trafficComponent = <Traffic data={this.state.traffic} locale={this.locale} />;
-      } else {
-        trafficComponent = this._getErrorComponent(this.state.traffic.err);
-      }
+    if (this.state.traffic.data) {
+      trafficComponent = <Traffic data={this.state.traffic.data} locale={this.locale} />;
+    } else if (this.state.traffic.err) {
+      trafficComponent = this._getErrorComponent(this.state.traffic.err);
     }
 
     // Network
     let networkComponent = loader;
-
-    if (this.state.network) {
-      if (this.state.network.data) {
-        networkComponent = <Network data={this.state.network} locale={this.locale} />;
-      } else {
-        networkComponent = this._getErrorComponent(this.state.network.err);
-      }
+    if (this.state.network.data) {
+      networkComponent = <Network data={this.state.network.data} locale={this.locale} />;
+    } else if (this.state.network.err) {
+      networkComponent = this._getErrorComponent(this.state.network.err);
     }
 
     return (
