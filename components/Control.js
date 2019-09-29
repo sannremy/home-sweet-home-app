@@ -23,6 +23,8 @@ type Props = {
   locale: String
 };
 
+let updateTimer = null;
+
 export default class Control extends Component<Props> {
 
   constructor(props) {
@@ -33,20 +35,9 @@ export default class Control extends Component<Props> {
 
     this.state = {
       lastUpdateDate: lastUpdateDate,
-      lastUpdateText: moment(lastUpdateDate).fromNow(),
       isSettingsModalVisible: false,
-      refreshIntervalValue: 15,
+      refreshIntervalValue: 300, // seconds
     };
-
-    this._initAutoRefreshLastUpdateDuration();
-  }
-
-  _initAutoRefreshLastUpdateDuration = () => {
-    setInterval(() => {
-      this.setState({
-        lastUpdateText: moment(this.state.lastUpdateDate).fromNow()
-      });
-    }, 60000);
   }
 
   _onPressRefreshButton = () => {
@@ -55,10 +46,9 @@ export default class Control extends Component<Props> {
     const lastUpdateDate = new Date();
     this.setState({
       lastUpdateDate: lastUpdateDate,
-      lastUpdateText: moment(lastUpdateDate).fromNow()
     });
   }
-  
+
   _onPressSettingsButton = () => {
     this._setSettingsModalVisible(true);
   }
@@ -76,11 +66,14 @@ export default class Control extends Component<Props> {
   }
 
   _formatRefreshIntervalValue = (value) => {
-    const output = '';
-    const duration = moment.duration(value, 'minutes');
-    const hours = ('' + duration.hours()).padStart(2, '0');
+    const duration = moment.duration(value * 1000);
     const minutes = ('' + duration.minutes()).padStart(2, '0');
-    return hours + ':' + minutes;
+    const seconds = ('' + duration.seconds()).padStart(2, '0');
+    return minutes + ':' + seconds;
+  }
+
+  _onSettingsDone = () => {
+    this.props.onSettingsDone(this.state.refreshIntervalValue);
   }
 
   _renderSettingsModal = () => {
@@ -93,6 +86,9 @@ export default class Control extends Component<Props> {
         }}
         onBackdropPress={() => {
           this._setSettingsModalVisible(!this.state.isSettingsModalVisible);
+        }}
+        onModalHide={() => {
+          this._onSettingsDone();
         }}
         swipeDirection={['down']}
         style={{
@@ -113,9 +109,9 @@ export default class Control extends Component<Props> {
             <Text>Refresh Interval</Text>
             <Slider
               style={{width: 200, height: 40}}
-              minimumValue={15}
-              maximumValue={180}
-              step={15}
+              minimumValue={300}
+              maximumValue={1800}
+              step={30}
               value={this.state.refreshIntervalValue}
               minimumTrackTintColor='#000000'
               maximumTrackTintColor='#cccccc'
@@ -126,7 +122,7 @@ export default class Control extends Component<Props> {
         </View>
       </Modal>
     );
-  } 
+  }
 
   render() {
     return (
@@ -144,7 +140,7 @@ export default class Control extends Component<Props> {
             </TouchableHighlight>
           </Col>
           <Col size={10}>
-            <Text style={styles.lastUpdateText}>{this.state.lastUpdateText}</Text>
+            <Text style={styles.lastUpdateDateText}>{moment(this.state.lastUpdateDate).fromNow()}</Text>
           </Col>
           <Col size={1}>
             <TouchableHighlight
@@ -191,7 +187,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     color: '#fff',
   },
-  lastUpdateText: {
+  lastUpdateDateText: {
     paddingLeft: 10,
   },
   settingsButtonTouchable: {
