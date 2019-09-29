@@ -137,10 +137,6 @@ export default class App extends Component<Props, State> {
     );
   }
 
-  _applySettings = (updateInterval) => {
-    console.log(updateInterval);
-  }
-
   componentDidMount() {
     this._refreshAllServices();
   }
@@ -210,7 +206,6 @@ export default class App extends Component<Props, State> {
                 <View style={[styles.componentWrapper, styles.componentWrapperControl]}>
                   <Control
                     onPressRefreshButton={this._refreshAllServices}
-                    onSettingsDone={this._applySettings}
                     locale={this.locale}
                   />
                 </View>

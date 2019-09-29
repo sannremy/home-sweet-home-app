@@ -23,7 +23,7 @@ type Props = {
   locale: String
 };
 
-let updateTimer = null;
+let serviceUpdatesTimer = null;
 
 export default class Control extends Component<Props> {
 
@@ -38,6 +38,8 @@ export default class Control extends Component<Props> {
       isSettingsModalVisible: false,
       refreshIntervalValue: 300, // seconds
     };
+
+    this._applySettings();
   }
 
   _onPressRefreshButton = () => {
@@ -72,8 +74,15 @@ export default class Control extends Component<Props> {
     return minutes + ':' + seconds;
   }
 
-  _onSettingsDone = () => {
-    this.props.onSettingsDone(this.state.refreshIntervalValue);
+  _applySettings = () => {
+    if (serviceUpdatesTimer) {
+      clearInterval(serviceUpdatesTimer);
+      serviceUpdatesTimer = null;
+    }
+
+    serviceUpdatesTimer = setInterval(() => {
+      this._onPressRefreshButton();
+    }, this.state.refreshIntervalValue * 1000);
   }
 
   _renderSettingsModal = () => {
@@ -88,7 +97,7 @@ export default class Control extends Component<Props> {
           this._setSettingsModalVisible(!this.state.isSettingsModalVisible);
         }}
         onModalHide={() => {
-          this._onSettingsDone();
+          this._applySettings();
         }}
         swipeDirection={['down']}
         style={{
