@@ -5,7 +5,7 @@
  * @flow
  */
 
-import { HOME_SWEET_HOME_API_URL } from 'react-native-dotenv'
+import env from './env.json';
 
 import React, { Component } from 'react';
 
@@ -84,7 +84,7 @@ export default class App extends Component<Props, State> {
 
     try {
       let response = await fetch(
-        HOME_SWEET_HOME_API_URL + '/' + mapViewEndpoint[view],
+        env.homeSweetHomeAPIUrl + '/' + mapViewEndpoint[view],
       );
 
       let responseJson = await response.json();
