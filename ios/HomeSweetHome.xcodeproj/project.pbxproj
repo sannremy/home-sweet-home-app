@@ -342,7 +342,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1100;
-				ORGANIZATIONNAME = Facebook;
+				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
