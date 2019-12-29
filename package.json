@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios --verbose --simulator=\"iPad (7th generation)\"",
+    "ios": "react-native run-ios --verbose --simulator=\"iPad Air (3rd generation)\"",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."
