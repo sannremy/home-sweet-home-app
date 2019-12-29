@@ -9,7 +9,7 @@ yarn install
 ```
 
 ### For development
-Run on a simulator:
+Run in Simulator:
 ```bash
 yarn run ios
 ```
