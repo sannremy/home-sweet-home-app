@@ -55,7 +55,7 @@ export default class Control extends Component<Props> {
     this.state = {
       lastUpdateDate: lastUpdateDate,
       isSettingsModalVisible: false,
-      refreshIntervalValue: 300, // seconds
+      refreshIntervalValue: 3600, // seconds
     };
 
     this._applySettings();
@@ -137,9 +137,9 @@ export default class Control extends Component<Props> {
             <Text>Refresh Interval</Text>
             <Slider
               style={{width: 200, height: 40}}
-              minimumValue={300}
-              maximumValue={1800}
-              step={30}
+              minimumValue={1800}
+              maximumValue={21600}
+              step={1800}
               value={this.state.refreshIntervalValue}
               minimumTrackTintColor='#000000'
               maximumTrackTintColor='#cccccc'
