@@ -59,8 +59,10 @@ export default class Traffic extends Component<Props> {
             <Text>{durations[i].label}</Text>
           </Col>
           <Col size={2}>
-            {/*<Text>{Math.round(durations[i].distance/1000, 1)} km</Text>*/}
-            <Text>{Math.round(durations[i].distance/1000 / (durations[i].duration / 3600), 1)} km/h</Text>
+            {/* Distance in km */}
+            <Text>{Math.round(durations[i].distance/1000, 1)} km</Text>
+            {/* Average speed in km per h */}
+            {/* <Text>{Math.round(durations[i].distance/1000 / (durations[i].duration / 3600), 1)} km/h</Text> */}
           </Col>
         </Row>
       ));
