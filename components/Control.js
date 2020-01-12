@@ -184,7 +184,7 @@ export default class Control extends Component<Props> {
               onPress={this._onPressSettingsButton}
             >
               <View style={styles.settingsButtonView}>
-                <Icon name='sliders' size={16} color={styles.settingsButtonView.color} />
+                <Icon name='settings' size={16} color={styles.settingsButtonView.color} />
               </View>
             </TouchableHighlight>
           </Col>
