@@ -168,7 +168,7 @@ export default class Control extends Component<Props> {
             </TouchableHighlight>
           </Col>
           <Col size={10}>
-            <Text style={styles.lastUpdateDateText}>{moment(this.state.lastUpdateDate).fromNow()}</Text>
+            <Text style={styles.lastUpdateDateText}>{moment(this.state.lastUpdateDate).calendar()}</Text>
           </Col>
           <Col size={1}>
             <TouchableHighlight
