@@ -88,9 +88,11 @@ export default class Control extends Component<Props> {
 
   _formatRefreshIntervalValue = (value) => {
     const duration = moment.duration(value * 1000);
+    const hours = ('' + duration.hours()).padStart(2, '0');
     const minutes = ('' + duration.minutes()).padStart(2, '0');
-    const seconds = ('' + duration.seconds()).padStart(2, '0');
-    return minutes + ':' + seconds;
+    // const seconds = ('' + duration.seconds()).padStart(2, '0');
+    // return `${hours}:${minutes}:${seconds}`;
+    return `${hours}:${minutes}`;
   }
 
   _applySettings = () => {
