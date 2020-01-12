@@ -57,17 +57,14 @@ export default class Control extends Component<Props> {
       isSettingsModalVisible: false,
       refreshIntervalValue: 3600, // seconds
     };
+  }
 
+  componentDidMount() {
     this._applySettings();
   }
 
   _onPressRefreshButton = () => {
-    this.props.onPressRefreshButton();
-
-    const lastUpdateDate = new Date();
-    this.setState({
-      lastUpdateDate: lastUpdateDate,
-    });
+    this._applySettings();
   }
 
   _onPressSettingsButton = () => {
@@ -96,13 +93,21 @@ export default class Control extends Component<Props> {
   }
 
   _applySettings = () => {
+    this.props.onPressRefreshButton();
+
+    const lastUpdateDate = new Date();
+    this.setState({
+      lastUpdateDate: lastUpdateDate,
+    });
+
+    // Clear existing timer and set new timer
     if (serviceUpdatesTimer) {
-      clearInterval(serviceUpdatesTimer);
+      clearTimeout(serviceUpdatesTimer);
       serviceUpdatesTimer = null;
     }
 
-    serviceUpdatesTimer = setInterval(() => {
-      this._onPressRefreshButton();
+    serviceUpdatesTimer = setTimeout(() => {
+      this._applySettings();
     }, this.state.refreshIntervalValue * 1000);
   }
 
