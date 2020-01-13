@@ -8,14 +8,13 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
-  View,
-  TouchableHighlight
+  View
 } from 'react-native';
 
 import Slider from '@react-native-community/slider';
+import { ButtonGroup, Icon } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import Icon from 'react-native-vector-icons/Feather';
 import moment from 'moment/min/moment-with-locales';
 
 // https://github.com/uxitten/polyfill/blob/master/string.polyfill.js
@@ -56,6 +55,7 @@ export default class Control extends Component<Props> {
       lastUpdateDate: lastUpdateDate,
       isSettingsModalVisible: false,
       refreshIntervalValue: 3600, // seconds
+      modeIndex: 0,
     };
   }
 
@@ -111,6 +111,12 @@ export default class Control extends Component<Props> {
     }, this.state.refreshIntervalValue * 1000);
   }
 
+  _onPressModeAtHomeButton = () => {
+    this.setState({
+      modeAtHomeEnabled: !this.state.modeAtHomeEnabled
+    });
+  }
+
   _renderSettingsModal = () => {
     return (
       <Modal
@@ -148,7 +154,7 @@ export default class Control extends Component<Props> {
               maximumValue={21600}
               step={1800}
               value={this.state.refreshIntervalValue}
-              minimumTrackTintColor='#000000'
+              minimumTrackTintColor='#00b16a'
               maximumTrackTintColor='#cccccc'
               onValueChange={this._onValueChangeRefreshInterval}
             />
@@ -159,34 +165,49 @@ export default class Control extends Component<Props> {
     );
   }
 
+  _onPressModeButton = (modeIndex) => {
+    this.setState({modeIndex})
+  }
+
   render() {
     return (
       <Grid style={styles.wrapper}>
         <Row style={styles.rowWrapper}>
-          <Col size={2}>
-            <TouchableHighlight
-              style={styles.refreshButtonTouchable}
-              underlayColor='#4183d7'
+          <Col size={1}>
+            <Icon
+              name='refresh-cw'
+              type='feather'
+              size={16}
+              color='#000'
               onPress={this._onPressRefreshButton}
-            >
-              <View style={styles.refreshButtonView}>
-                <Icon name='refresh-cw' size={16} color={styles.refreshButtonText.color} />
-              </View>
-            </TouchableHighlight>
+            />
           </Col>
-          <Col size={10}>
-            <Text style={styles.lastUpdateDateText}>{moment(this.state.lastUpdateDate).calendar()}</Text>
+          <Col size={9}>
+            <Text>{moment(this.state.lastUpdateDate).calendar()}</Text>
           </Col>
           <Col size={1}>
-            <TouchableHighlight
-              style={styles.settingsButtonTouchable}
-              underlayColor='#fff'
+            <Icon
+              name='settings'
+              size={16}
+              color='#000'
+              type='feather'
               onPress={this._onPressSettingsButton}
-            >
-              <View style={styles.settingsButtonView}>
-                <Icon name='settings' size={16} color={styles.settingsButtonView.color} />
-              </View>
-            </TouchableHighlight>
+            />
+          </Col>
+        </Row>
+        <Row style={styles.rowWrapper}>
+          <Col size={1}>
+            <ButtonGroup
+              onPress={this._onPressModeButton}
+              selectedIndex={this.state.modeIndex}
+              buttons={['Normal', 'At home']}
+              selectedButtonStyle={{
+                backgroundColor: '#00b16a'
+              }}
+              innerBorderStyle={{
+                color: '#f0f0f0'
+              }}
+            />
           </Col>
         </Row>
         {this._renderSettingsModal()}
@@ -204,35 +225,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  refreshButtonTouchable: {
-    backgroundColor: '#19b5fe',
-    borderRadius: 10,
-    flexDirection: 'row',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
-  refreshButtonView: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  refreshButtonText: {
-    paddingLeft: 10,
-    color: '#fff',
-  },
-  lastUpdateDateText: {
-    paddingLeft: 10,
-  },
-  settingsButtonTouchable: {
-    flexDirection: 'row',
-  },
-  settingsButtonView: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    color: '#000',
-  }
 });

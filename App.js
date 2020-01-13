@@ -202,7 +202,7 @@ export default class App extends Component<Props, State> {
               </Row>
             </Col>
             <Col size={6}>
-              <Row size={1} style={styles.box}>
+              <Row size={2} style={styles.box}>
                 <View style={[styles.componentWrapper, styles.componentWrapperControl]}>
                   <Control
                     onPressRefreshButton={this._refreshAllServices}
@@ -215,7 +215,7 @@ export default class App extends Component<Props, State> {
                   {trafficComponent}
                 </View>
               </Row>
-              <Row size={3} style={styles.box}>
+              <Row size={2} style={styles.box}>
                 <View style={[styles.componentWrapper, styles.componentWrapperBorder]}>
                   {riverComponent}
                 </View>
