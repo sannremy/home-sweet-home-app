@@ -107,7 +107,10 @@ export default class App extends Component<Props, State> {
     // Fetch new data
     try {
       const data = await this._getServiceFromApi(service);
-      state[service].data = data;
+
+      if (data) {
+        state[service].data = data;
+      }
     } catch (error) {
       state[service].err = error;
     }
