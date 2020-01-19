@@ -50,21 +50,23 @@ export default class Control extends Component<Props> {
 
     moment.locale(props.locale);
     const lastUpdateDate = new Date();
+    const refreshIntervalValue = 3600;
 
     this.state = {
       lastUpdateDate: lastUpdateDate,
       isSettingsModalVisible: false,
-      refreshIntervalValue: 3600, // seconds
+      previousRefreshValue: refreshIntervalValue,
+      refreshIntervalValue: refreshIntervalValue, // seconds
       modeIndex: 0,
     };
   }
 
   componentDidMount() {
-    this._applySettings();
+    this._applySettings(true);
   }
 
   _onPressRefreshButton = () => {
-    this._applySettings();
+    this._applySettings(true);
   }
 
   _onPressSettingsButton = () => {
@@ -92,11 +94,16 @@ export default class Control extends Component<Props> {
     return `${hours}:${minutes}`;
   }
 
-  _applySettings = () => {
+  _applySettings = (forceApply = false) => {
+    if (!forceApply && this.state.previousRefreshValue === this.state.refreshIntervalValue) {
+      return;
+    }
+
     this.props.onPressRefreshButton();
 
     const lastUpdateDate = new Date();
     this.setState({
+      previousRefreshValue: this.state.refreshIntervalValue,
       lastUpdateDate: lastUpdateDate,
     });
 
@@ -115,6 +122,13 @@ export default class Control extends Component<Props> {
     this.setState({
       modeAtHomeEnabled: !this.state.modeAtHomeEnabled
     });
+  }
+
+  _onPressModeButton = (modeIndex) => {
+    if (this.state.modeIndex !== modeIndex) {
+      this.props.onPressModeButton(this.props.data.modes[modeIndex].key);
+      this.setState({modeIndex});
+    }
   }
 
   _renderSettingsModal = () => {
@@ -165,8 +179,28 @@ export default class Control extends Component<Props> {
     );
   }
 
-  _onPressModeButton = (modeIndex) => {
-    this.setState({modeIndex})
+  _renderControlModes = () => {
+    let buttons = [];
+
+    if (this.props.data && this.props.data.modes) {
+      buttons = this.props.data.modes.map((mode) => {
+        return mode.label;
+      });
+    }
+
+    return (
+      <ButtonGroup
+        onPress={this._onPressModeButton}
+        selectedIndex={this.state.modeIndex}
+        buttons={buttons}
+        selectedButtonStyle={{
+          backgroundColor: '#00b16a'
+        }}
+        innerBorderStyle={{
+          color: '#f0f0f0'
+        }}
+      />
+    );
   }
 
   render() {
@@ -197,17 +231,7 @@ export default class Control extends Component<Props> {
         </Row>
         <Row style={styles.rowWrapper}>
           <Col size={1}>
-            <ButtonGroup
-              onPress={this._onPressModeButton}
-              selectedIndex={this.state.modeIndex}
-              buttons={['Normal', 'At home']}
-              selectedButtonStyle={{
-                backgroundColor: '#00b16a'
-              }}
-              innerBorderStyle={{
-                color: '#f0f0f0'
-              }}
-            />
+            {this._renderControlModes()}
           </Col>
         </Row>
         {this._renderSettingsModal()}

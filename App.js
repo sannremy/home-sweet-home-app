@@ -37,6 +37,7 @@ type State = {
   indoor: Object,
   traffic: Object,
   network: Object,
+  control: Object,
 };
 
 export default class App extends Component<Props, State> {
@@ -61,6 +62,10 @@ export default class App extends Component<Props, State> {
       data: null,
       err: null,
     },
+    control: {
+      data: null,
+      err: null,
+    },
   };
 
   constructor(props) {
@@ -79,7 +84,8 @@ export default class App extends Component<Props, State> {
       weather: 'weather',
       river: 'vigicrue',
       traffic: 'traffic',
-      network: 'network'
+      network: 'network',
+      control: 'control',
     };
 
     try {
@@ -124,9 +130,14 @@ export default class App extends Component<Props, State> {
     this._refreshService('indoor');
     this._refreshService('traffic');
     this._refreshService('network');
+    this._refreshService('control');
   };
 
-  _getErrorComponent(error) {
+  _sendControlMode = async (modeName) => {
+    fetch(env.homeSweetHomeAPIUrl + '/control/' + modeName);
+  }
+
+  _getErrorComponent = (error) => {
     let errorText = null;
     if (error) {
       errorText = <Text>{JSON.stringify(error)}</Text>;
@@ -188,6 +199,16 @@ export default class App extends Component<Props, State> {
       networkComponent = this._getErrorComponent(this.state.network.err);
     }
 
+    // Control
+    let controlComponent = (
+      <Control
+        onPressRefreshButton={this._refreshAllServices}
+        onPressModeButton={this._sendControlMode}
+        locale={this.locale}
+        data={this.state.control.data}
+      />
+    );
+
     return (
       <View style={styles.app}>
         <SafeAreaView style={styles.appSafe}>
@@ -207,10 +228,7 @@ export default class App extends Component<Props, State> {
             <Col size={6}>
               <Row size={2} style={styles.box}>
                 <View style={[styles.componentWrapper, styles.componentWrapperControl]}>
-                  <Control
-                    onPressRefreshButton={this._refreshAllServices}
-                    locale={this.locale}
-                  />
+                  {controlComponent}
                 </View>
               </Row>
               <Row size={4} style={styles.box}>
